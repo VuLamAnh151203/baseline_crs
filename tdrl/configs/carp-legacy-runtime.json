@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "mode": "carp_legacy_v1",
+  "status": "source_matched",
+  "generation": {
+    "port": 18000,
+    "gpu_memory_utilization": 0.85,
+    "max_model_len": 16384,
+    "max_num_seqs": 64,
+    "request_concurrency": 2
+  },
+  "embedding": {
+    "port": 18001,
+    "gpu_memory_utilization": 0.4,
+    "max_model_len": 8192,
+    "max_num_seqs": 64,
+    "request_concurrency": 1
+  },
+  "reproducibility": {
+    "batch_invariant": {
+      "generation": false,
+      "embedding": true
+    },
+    "prefix_caching": false,
+    "exact_embedding_replay_required": true,
+    "generation_replay": "durable exact request journal; generation settings match CARP scripts/h100/serve.sh"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "scope": {"methods": ["PPDPP", "TDRL-R", "TDRL"], "claim": "three_method_automated_comparison"},
+  "datasets": ["TopDial", "DuRecDial2.0"],
+  "seeds": [17, 29, 43],
+  "protocols": ["profile", "resistant"],
+  "turn_budget": 10,
+  "assistant_decoding": {"temperature": 0.7, "top_p": 0.8, "top_k": 20, "max_tokens": 128},
+  "simulator_decoding": {"temperature": 0.7, "top_p": 0.8, "top_k": 20, "max_tokens": 128},
+  "development_scenarios": 16,
+  "threshold_quantiles": [0.2, 0.8],
+  "node_budget": 2048,
+  "candidates": 3,
+  "lookahead": 2,
+  "matched_generation_call_cap": 1,
+  "head": {"seed": 17, "steps": 30000, "batch_size": 256, "lr": 0.0003,
+    "cost": {"c_step": 1.0, "gamma": 1.0, "negative_margin": 10.0, "negative_weight": 1.0, "target_tau": 0.01}},
+  "ppdpp": {"seed": 17, "sft_epochs": 10, "sft_batch_size": 16, "sft_lr": 0.000006,
+    "rl_lr": 0.000006, "rl_episodes": 256, "accepted_reward": 1.0, "step_reward": -0.05, "gamma": 0.99},
+  "feasibility_safety_factor": 1.25,
+  "reserve_seconds": 86400,
+  "walltime_seconds": 1728000
+}

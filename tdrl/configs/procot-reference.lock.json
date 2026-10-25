@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "status": "source_pinned_and_audited",
+  "method": "ProCoT",
+  "upstream_repository": "https://github.com/dengyang17/LLM-Proactive.git",
+  "revision": "77ff4ed7dfda11afd719db3bd40886a1a51edf4e",
+  "files": {
+    "topkg/prompt.txt": "0926dfa356dc7ba77ec6c0003727722cdd73236b292fed407c90a33d7705bb37",
+    "topkg/self_play.py": "4a6f5e22cd5abebe55f404a8b630aa3ef9dcc4d90c3e0a2817da43cb190ab710",
+    "topkg/chatgpt_self_play.py": "bd2102bd7dfe9b0c3d8089d97dad3399d5b75df9058b6ac32857becb5317cc01"
+  },
+  "paper": "https://aclanthology.org/2023.findings-emnlp.711/",
+  "adaptation": {
+    "variant": "one-shot target-guided ProCoT",
+    "preserved": [
+      "one generation call for thought-action-response",
+      "current-topic and next-topic bridge planning",
+      "one fixed upstream target-guided demonstration",
+      "128-token response budget"
+    ],
+    "shared_evaluation_replacements": [
+      "Qwen3.5-9B BF16 backbone",
+      "shared chat-message history and visible target-profile-knowledge context",
+      "shared decoding, simulator, semantic judge, protocols, seed and turn limit",
+      "semantic goal completion instead of lexical target mention",
+      "baseline-local exact three-part output policy with fail-closed validation"
+    ]
+  }
+}

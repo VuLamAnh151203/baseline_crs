@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "mode": "carp_legacy_v1",
+  "claim": "isolated_reproduction_of_carp_public_evaluation_harness",
+  "reference_source": {
+    "git_commit": "86f56b07e4efd4e645a51e389423bea9d0d185be",
+    "files": {
+      "src/carp/harness/prompts.py": "1a0b17b4556d6827d697bfdf4c7ebff845ead5108d96445d71e09cd55ed14da0",
+      "src/carp/harness/simulator.py": "f3de61150b752f1e54dbb8256a375dc2ac73935a39438d74bb96e82a237f73a2",
+      "src/carp/harness/parsing.py": "18c8553f6b4959a64487d6b356519edd5eaeedcf85737fbca17cdd45138636b1",
+      "src/carp/harness/runner.py": "3058d92038e3e167e6fc6cfbfc465689650f0e9d55756fed8b1183b5bad7c6e8",
+      "src/carp/harness/dataset.py": "f674dd341419f3ee357929d16d1e36480965863a79b7f3caf81c32daea14ceb4"
+    }
+  },
+  "datasets": {
+    "TopDial": {
+      "filename": "topdial_test200_seed2911.jsonl",
+      "sha256": "bcb3a8e56f2d767eb0f544b4dbeed23f57e051f4d99f0048e7fe6e717b693d4c",
+      "scenarios": 200,
+      "min_success_turn": 1
+    },
+    "DuRecDial2.0": {
+      "filename": "durecdial_test200_seed2911.jsonl",
+      "sha256": "6d8fdc3e9e6d68581224e59789946e5de4b75717276a1c6d330cbe0afaff572e",
+      "scenarios": 200,
+      "min_success_turn": 2
+    }
+  },
+  "dataset_sampling_seed": 2911,
+  "runtime_shuffle_seed": 42,
+  "experimental_root_seed": 17,
+  "initial_history": "empty",
+  "max_turns": 10,
+  "temperature": 0.0,
+  "max_output_tokens": 3072,
+  "moderator": {
+    "labels": ["yes", "no"],
+    "repair_attempts": 1,
+    "structured_output": false
+  },
+  "stopping": ["accepted", "moderator_error", "max_turns"],
+  "refusal_is_terminal": false,
+  "request_contract": {
+    "one_plain_user_message": true,
+    "send_seed": false,
+    "send_top_p": false,
+    "send_top_k": false,
+    "thinking": false
+  },
+  "limitations": [
+    "This is the CARP legacy automatic evaluator, not the stricter CRS semantic judge.",
+    "It reports one profile-style protocol only and does not provide the resistant-user axis.",
+    "The 200+200 seed-2911 population differs from the fixed1000-prefix population."
+  ]
+}

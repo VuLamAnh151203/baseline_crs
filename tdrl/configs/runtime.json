@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "status": "proposed_not_h100_validated",
+  "generation": {
+    "port": 18000,
+    "gpu_memory_utilization": 0.48,
+    "max_model_len": 4096,
+    "max_num_seqs": 4,
+    "request_concurrency": 2
+  },
+  "embedding": {
+    "port": 18001,
+    "gpu_memory_utilization": 0.36,
+    "max_model_len": 4096,
+    "max_num_seqs": 8,
+    "request_concurrency": 1
+  },
+  "reproducibility": {
+    "batch_invariant": {
+      "generation": false,
+      "embedding": true
+    },
+    "prefix_caching": false,
+    "exact_embedding_replay_required": true,
+    "reference": "https://docs.vllm.ai/en/latest/features/batch_invariance/",
+    "generation_replay": "durable exact request journal; GDN_ATTN does not support vLLM batch invariance"
+  }
+}

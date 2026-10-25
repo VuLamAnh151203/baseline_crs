@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "status": "proposed",
+  "placeholder": "Temporal Distance Reinforcement Learning",
+  "allocation": {"ssh": "H100", "partition": "main", "account": "normal", "nodes": 1, "gpus": 1, "gpu": "nvidia_h100_80gb_hbm3", "wall_hours": 480, "reserve_hours": 24},
+  "datasets": ["TopDial", "DuRecDial2.0"],
+  "official_split_topology": "pending_gate1_audit",
+  "seeds": [17, 29, 43],
+  "bootstrap_seed": 20261003,
+  "bootstrap_resamples": 10000,
+  "protocols": ["profile", "resistant"],
+  "methods": ["qwen", "tdrl_r", "tdrl", "cosine", "random_routing", "always_rollout", "PPDPP", "DPDP", "TRIP", "DiffTOD"],
+  "cross_llm_backbone": false,
+  "turn_budget": 10,
+  "recovery": {"candidates": 3, "lookahead": 2},
+  "decoding": {
+    "assistant": {"temperature": 0.7, "top_p": 0.8, "top_k": 20, "max_tokens": 256},
+    "simulator": {"temperature": 0.7, "top_p": 0.8, "top_k": 20, "max_tokens": 256},
+    "moderator": {"temperature": 0.0, "top_p": 1.0, "top_k": 20, "max_tokens": 128}
+  },
+  "learning": {"heads": ["MRNFixed", "IQE"], "optimizer": "AdamW", "lr": 0.0003, "steps_per_candidate": 30000, "batch_size": 256, "c_step": 1.0, "gamma": 1.0, "negative_margin": 10.0, "negative_weight": 1.0, "target_tau": 0.01, "precision": "bfloat16"},
+  "thresholds": "separately_calibrate_H_edge_and_H_cover_on_development",
+  "schedule_hours": {"gate2_and_profiling": 6, "offline_embeddings": 12, "head_training": 18, "baseline_training": 48, "development_selection": 48, "primary_test_both_protocols": 240, "diagnostics_transfer": 36, "report_export": 6, "contingency": 66}
+}

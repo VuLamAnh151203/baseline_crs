@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "scope": "all_baselines_fixed1000_official_test",
+  "methods": ["PPDPP", "DiffTOD", "TRIP", "DPDP", "TDRL-R", "TDRL"],
+  "datasets": ["TopDial", "DuRecDial2.0"],
+  "train_dev": "full_official_train_and_development_splits",
+  "test": {
+    "resource": "tdrl.resources.test_scenarios_1000_td500_dr500_v1.json",
+    "resource_sha256": "c0bb70f77d305616a54cfc546bb75a15ad6651c42b7ef8fa7ae98508a103af97",
+    "scenario_count": 1000,
+    "per_dataset": {"TopDial": 500, "DuRecDial2.0": 500},
+    "execution_order": "first_200_TopDial_then_200_DuRecDial_then_300_TopDial_then_300_DuRecDial"
+  },
+  "evaluation": {
+    "seed": 17,
+    "protocols": ["profile", "resistant"],
+    "turn_budget": 10,
+    "budget": "natural"
+  },
+  "claim": "single_seed_sampled_official_test_evaluation"
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "status": "blocked_until_bootstrap",
+  "model_id": "bert-base-uncased",
+  "revision": "REPLACE_WITH_FULL_40_CHARACTER_COMMIT_SHA",
+  "encoder": {},
+  "tokenizer": {}
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "scope": "Fixed fitted DiffTOD on discovery64 development only; no confirmation or official-test bodies",
+  "seed": 17,
+  "additional_discovery_dialogue_reserve": 256,
+  "comparison_config": "configs/comparison-judge-v2-sample500-seed17.json",
+  "protocols": ["profile", "resistant"],
+  "sampling": "digest([17,id]) sorted TopDial development, ranks 16:80",
+  "checkpoint_rule": "complete native-budget fitting; development likelihood-selected EMA",
+  "evaluation_requires": "matching complete fitted-policy runtime/replay and post-fit feasibility smokes on two distinct H100 GPUs"
+}

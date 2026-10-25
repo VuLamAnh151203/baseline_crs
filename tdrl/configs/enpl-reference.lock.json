@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "source_pinned_and_audited",
+  "method": "EnPL",
+  "upstream_repository": "https://github.com/pandazzh2020/ConvPlan.git",
+  "revision": "a76d5a7d6ea1d9c7a07a9574f4901ff79ed440bd",
+  "files": {
+    "README.md": "f817c6692ec74a35bc66db3346e58dbd9068e34746eafc1c1a8230510c8e238d",
+    "ConvPlan.zip": "be487e50e95a202645b3dcc6440cb5d88cb113ae9fee2e73017502ff7bd002d3",
+    "ConvPlan.json": "cbb8c656455ecfd3b45defa0d7d2c3b56f19637a9f5988166d9bc2eee5ea6b28"
+  },
+  "paper": {
+    "title": "Thoughts to Target: Enhance Planning for Target-driven Conversation",
+    "venue": "EMNLP 2024",
+    "url": "https://aclanthology.org/2024.emnlp-main.1175/",
+    "attached_pdf_sha256": "334e11ef9ef4d88da18f13230c19e6f3bf5a2907620434071ed11f1f835922b9"
+  },
+  "implementation_guide_sha256": "8add2abba7c06020192b68b74eb72136c9bd8627661ce6a894fa5ed4dad2201c",
+  "limitations": [
+    "the public repository contains data but no executable EnPL implementation",
+    "released records do not identify the authors' final selected candidates or data splits",
+    "top-two selection over 5541 released records cannot reproduce the paper's 12147-plan count",
+    "TextRank implementation and several generation settings are not specified",
+    "domain-conditioned entity retrieval is an explicit adaptation of the paper's movie-overlap heuristic"
+  ]
+}

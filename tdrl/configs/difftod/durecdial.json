@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "model": {
+    "vocab_size": 50257,
+    "length": 1024,
+    "hidden_size": 1024,
+    "cond_dim": 128,
+    "n_blocks": 24,
+    "n_heads": 16,
+    "dropout": 0.1,
+    "scale_by_sigma": true
+  },
+  "training": {
+    "batch_size": 32,
+    "gradient_accumulation": 1,
+    "steps": 100000,
+    "learning_rate": 0.0001,
+    "warmup_steps": 2500,
+    "weight_decay": 0.0,
+    "beta1": 0.9,
+    "beta2": 0.999,
+    "epsilon": 1e-8,
+    "gradient_clip": 1.0,
+    "ema_decay": 0.9999,
+    "checkpoint_every": 10000,
+    "evaluate_every": 100,
+    "seed": 17
+  },
+  "sampling": {
+    "steps": 1024,
+    "candidates": 5,
+    "semantic_offset": 192,
+    "epsilon": 1e-5,
+    "denoise": true
+  }
+}

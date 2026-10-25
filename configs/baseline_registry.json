@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "evaluation_prefix": {
+    "resource": "tdrl/src/tdrl/resources/test_scenarios_1000_td500_dr500_v1.json",
+    "full400": "200 TopDial + 200 DuRecDial2.0 scenarios, profile and resistant protocols",
+    "root_seed": 17
+  },
+  "methods": {
+    "direct_llm_v2": {
+      "display_name": "DirectLLM-v2",
+      "training": "not_applicable",
+      "gpus": 2,
+      "walltime": "12:00:00"
+    },
+    "tepl_v2": {
+      "display_name": "T-EPL-v2",
+      "training": "train_only_self_simulation_policy_and_memory",
+      "gpus": 2,
+      "walltime": "6-00:00:00"
+    },
+    "enpl_domain3": {
+      "display_name": "EnPL-domain3",
+      "training": "train_only_plan_bank_preparation_no_gradient_fit",
+      "gpus": 2,
+      "walltime": "18:00:00"
+    },
+    "procot": {
+      "display_name": "ProCoT",
+      "training": "not_applicable",
+      "gpus": 2,
+      "walltime": "12:00:00"
+    },
+    "dpdp": {
+      "display_name": "DPDP-50-per-round",
+      "training": "offline_actor_critic_then_mcts_self_play",
+      "gpus": 2,
+      "walltime": "6-00:00:00"
+    },
+    "scope_crs_lite": {
+      "display_name": "SCOPE-CRS-lite",
+      "training": "dataset_reward_fit_with_frozen_transition_ensemble",
+      "gpus": 2,
+      "walltime": "6-00:00:00"
+    },
+    "epl_native_qwen": {
+      "display_name": "EPL-native-Qwen",
+      "training": "native_policy_and_memory_pipeline",
+      "gpus": 2,
+      "walltime": "6-00:00:00"
+    }
+  }
+}

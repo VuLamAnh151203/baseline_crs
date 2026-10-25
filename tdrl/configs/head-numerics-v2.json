@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "scope": "training-only numerical repair; no test tuning",
+  "source": "artifacts/two-gpu-58159",
+  "dataset": "TopDial",
+  "head": {
+    "seed": 17,
+    "steps": 30000,
+    "batch_size": 256,
+    "lr": 0.0003,
+    "numerical_revision": 2,
+    "cost": {
+      "c_step": 1.0,
+      "gamma": 1.0,
+      "negative_margin": 10.0,
+      "negative_weight": 1.0,
+      "target_tau": 0.01
+    }
+  }
+}

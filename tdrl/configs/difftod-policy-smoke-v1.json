@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "scope": "unfitted SEDD policy H100 runtime/gradient/sampling replay gate only",
+  "seed": 17,
+  "sampling_steps": 8,
+  "policy_model_lock": "configs/difftod-policy-model.lock.json",
+  "data_preparation": "artifacts/difftod-data-v1",
+  "generation_model": "Qwen/Qwen3.5-9B",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "precision": "bfloat16",
+  "attention_execution": "pytorch_sdpa_v1",
+  "fitting_authorized_by_this_smoke": false,
+  "full_natural_sampling_preflight_pending": true,
+  "comparison_config": "configs/comparison-judge-v2-sample500-seed17.json"
+}

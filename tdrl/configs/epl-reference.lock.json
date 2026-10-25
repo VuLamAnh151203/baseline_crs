@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "status": "source_pinned_and_audited",
+  "repository": "https://github.com/huyquangdao/EPL.git",
+  "revision": "364c6fd17f1bbdb2abcac9cd2381a29bf1bd5dda",
+  "files": {
+    "dyna_gym/agents/mcts.py": "43890176079e972edb96605ef22d28f597100df307f798b75fb06d2cde3a4f17",
+    "dyna_gym/models/policy.py": "d4a47bf0da40103c26eb52abb213e20f2e1a40a7b8864969d5894cb52eb6a8ad",
+    "retrieval/retrieval.py": "3aa16b1b6cf007b64c7a64c0b4cbbe422ba48da8deb717ad0fec28b01bce2564",
+    "train_policy.py": "b0aa33197ef34bfe20934ed0e84155abd1acfcf0751a7e8631033e727b3ad389",
+    "self_simulation.py": "2602031c41524b17e49045bdb26135542bc3a74b26ff8a4d68581a3c4f5881cd"
+  },
+  "adaptation": "native EPL BERT-base-cased policy architecture/training defaults and all-MiniLM-L6-v2 retrieval; shared local Qwen realization/simulation/judge only; train-only self-simulated experience memory; unavoidable fixed six-action taxonomy and TopDial interface transfer"
+}

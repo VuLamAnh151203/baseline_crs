@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "scope": "Semantic strategies on every actionable training-bank state; original states/embeddings/head/weak labels retained",
+  "seed": 17,
+  "bank": "artifacts/two-gpu-58159/embeddings/TopDial/bank/index.json",
+  "bank_manifest": "artifacts/two-gpu-58159/embeddings/TopDial/manifest.json",
+  "expected_records": 58364,
+  "train_sha256": "3588a132b5fead75ae0a037f923f43b492da57474917c66f1da50bfbd520304d",
+  "prompt_source": "scripts/audit_training_strategies.py:PROMPT (unchanged audited classifier)",
+  "preflight_count": 128,
+  "preflight_sampling": "digest([17,node_id]) sorted training-only actionable states, first 128",
+  "decoding": {"temperature": 0, "top_p": 0.8, "top_k": 20, "max_tokens": 32},
+  "ambiguity": "exclude ambiguous nodes from actionable graph guidance; never replace with a weak label",
+  "comparison_reserve_preflight": "artifacts/difftod-native-preflight-v1-58159/smoke-0",
+  "feasibility_safety_factor": 1.25,
+  "progress_every": 256
+}

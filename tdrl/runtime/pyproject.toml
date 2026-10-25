@@ -1,0 +1,18 @@
+[project]
+name = "tdrl-h100-runtime"
+version = "0.1.0"
+requires-python = ">=3.11,<3.13"
+dependencies = ["tdrl[intrinsic]", "vllm==0.30.0+cu129", "torch==2.13.0", "torchvision==0.28.0", "torchaudio==2.11.0", "torchcodec==0.16.0", "ninja==1.13.2"]
+
+[tool.uv.sources]
+tdrl = { path = "..", editable = true }
+vllm = { url = "https://github.com/vllm-project/vllm/releases/download/v0.30.0/vllm-0.30.0%2Bcu129-cp38-abi3-manylinux_2_28_x86_64.whl" }
+torch = { index = "pytorch-cu129" }
+torchvision = { index = "pytorch-cu129" }
+torchaudio = { index = "pytorch-cu129" }
+torchcodec = { index = "pytorch-cu129" }
+
+[[tool.uv.index]]
+name = "pytorch-cu129"
+url = "https://download.pytorch.org/whl/cu129"
+explicit = true

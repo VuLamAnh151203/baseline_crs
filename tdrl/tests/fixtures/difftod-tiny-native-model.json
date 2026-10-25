@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "scope": "tiny CPU architecture fixture only",
+  "source": {
+    "schema_version": 1,
+    "repository": "https://github.com/ninglab/DiffTOD",
+    "revision": "fd46b2887a9c0d9e0e413623e79c72ee32b9b7c1",
+    "files": {
+      "model/transformer.py": "62b01d2883ddfdba04a0795358d7d41608edf8f8cb092e55bb66dfdb227571fd",
+      "model/rotary.py": "fd68d20b74b390e96d480ef4163317470299f3082501f4994c22b61f6958cb89",
+      "model/fused_add_dropout_scale.py": "6531033aaae255ba3ef1d3d8a9265e51165dee6d6c72108862315766459d1386"
+    }
+  },
+  "attention_reference": "explicit CPU matmul/softmax; native FlashAttention parity on H100 still required",
+  "seed": 17,
+  "forward_tolerance": {
+    "rtol": 1e-06,
+    "atol": 1e-06
+  },
+  "gradient_tolerance": {
+    "rtol": 2e-05,
+    "atol": 2e-05
+  },
+  "fixture_sha256": "efeef678e8173e581d1743a4e8adbe430db31a1c8f370945299aa4a435ab72db",
+  "pretrained_inference_performed": false
+}

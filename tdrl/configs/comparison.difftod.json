@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "scope": {
+    "methods": ["PPDPP", "DiffTOD", "TDRL-R", "TDRL"],
+    "claim": "four_method_automated_comparison"
+  },
+  "datasets": ["TopDial", "DuRecDial2.0"],
+  "seeds": [17, 29, 43],
+  "protocols": ["profile", "resistant"],
+  "turn_budget": 10,
+  "budgets": ["natural", "matched"],
+  "development_scenarios": 16,
+  "assistant_decoding": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_tokens": 128
+  },
+  "simulator_decoding": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_tokens": 128
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "scope": "training-only weak-versus-semantic strategy audit; no labels or scientific contracts amended",
+  "seed": 17,
+  "input": "artifacts/topdial-difftod-goal/training-question-label-audit.json",
+  "input_sha256": "9469822d1d508ebb20ca6b48e103361182b686264b837469779db6d6df5cc646",
+  "train_sha256": "3588a132b5fead75ae0a037f923f43b492da57474917c66f1da50bfbd520304d",
+  "subset": "32 fixed ask_preference/target-mention/question moves; selection independent of dialogue outcomes"
+}

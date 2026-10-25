@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "status": "source_pinned_and_audited",
+  "method": "SCOPE-CRS-lite",
+  "upstream_repository": "https://github.com/chenzhiliang94/convo-plan-SCOPE.git",
+  "revision": "b35dbc64808afce25e8f8e5d6838ecf271ec4d0b",
+  "paper": "https://openreview.net/forum?id=3cgMU3TyyE",
+  "transition_release_folder_id": "1NLK8f8aV476frtIuMwC8IgwTVPxbOB6S",
+  "files": {
+    "README.md": "91c135262b66f0f2c2055733b00e03877160ba45b50a8c01e63349c91ad6cea6",
+    "agent/llm_config.yaml": "4ed31d5b1b7d5e2949fb0a2b4c7cf678ac52b44513655290e9b8c6fd9d1ddfcf",
+    "monte_carlo_tree_search/mcts.py": "e935d2429930ce7feeac8c7161020ff335b75585b79213e42b0270f1018821dc",
+    "monte_carlo_tree_search/policy_agent.py": "77e3ded748da85599f211d1cb3bb538c3fc817dcc82b4dad7d1c04062850b8e0",
+    "monte_carlo_tree_search/single_agent_mcts.py": "5064edf06fc505e92e362549835401aa954b27be16f43204e18489f608b81317",
+    "monte_carlo_tree_search/ucb.py": "4679912ef830837321b5e1f9ca712a1766e51819a39af9d0dee869e877310708",
+    "reward/Embedding_Length_Reward.py": "d3caf478bcc09e7db55ced60be0f9b0aaa0f54ddce7f8892436fde09da612825",
+    "reward/Llama_2_Guard_Reward.py": "58748ce7ffdfeba1b5ae1464530bdb18db036a77ff29cd4b4a7cfbf0a71d91c0",
+    "transition_models/embedding_model.py": "fc562cd6b2bd31859eed63360d7a8b5b566e0e0f8f558bca4d99b18b6d8b28c4",
+    "transition_models/regression_wrapper.py": "8b5be4fc9d857163992864c486fb89570fbf5fe02a0b74ab90efe5ac2188d53c",
+    "transition_models/transition_model.py": "865bece5655fc7e2735424a474217f610cae99faffd408157c2c1bf7a73fcba5"
+  },
+  "adaptation": {
+    "variant": "SCOPE-CRS-lite",
+    "preserved": [
+      "five response candidates per turn",
+      "Meta-Llama-Guard-2-8B 1024-D projection with seed 42",
+      "released four-seed LMSYS transition ensemble",
+      "semantic-space online MCTS and code-release UCT coefficient",
+      "depth six, gamma 0.9 and three-second search budget"
+    ],
+    "task_adapted": [
+      "Qwen3.5-9B BF16 candidate generation",
+      "goal-conditioned reward trained separately on each dataset train split",
+      "minimum development-loss reward checkpoint selection",
+      "shared fixed-400 simulator, semantic judge, protocols, seed and turn budget"
+    ],
+    "source_repairs": [
+      "load transition root explicitly instead of dropping its parent path",
+      "load released model_min_val.pth instead of absent model_min_train.pth",
+      "require all four seeds and both directions with SHA-256 manifests",
+      "per-search visit state and stable candidate ordering"
+    ]
+  }
+}

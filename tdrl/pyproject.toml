@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tdrl"
+version = "0.1.0"
+description = "Temporal Distance Reinforcement Learning (temporary placeholder)"
+requires-python = ">=3.11,<3.13"
+dependencies = ["torch>=2.7,<3", "numpy>=1.26,<3", "httpx==0.28.1"]
+
+[project.optional-dependencies]
+intrinsic = ["nltk==3.9.1"]
+dev = ["pytest==8.3.5", "ruff==0.16.10"]
+
+[project.scripts]
+tdrl = "tdrl.cli:main"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+
+[tool.uv]
+constraint-dependencies = ["torch==2.11.0", "numpy==1.26.4"]

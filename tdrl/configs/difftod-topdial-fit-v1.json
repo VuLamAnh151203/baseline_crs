@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "scope": "TopDial native diffusion likelihood policy fitting, confirmation-family-safe selection",
+  "seed": 17,
+  "updates": 100001,
+  "update_budget_basis": "native n_iters=100000 loop uses step<n_iters+1",
+  "batch_size": 32,
+  "validation_every": 100,
+  "durable_checkpoint_every": 1000,
+  "source_snapshot_every": 10000,
+  "data_preparation": "artifacts/difftod-data-v1",
+  "validation_preparation": "artifacts/difftod-validation-v1",
+  "comparison_config": "configs/comparison-judge-v2-sample500-seed17.json",
+  "policy_model_lock": "configs/difftod-policy-model.lock.json",
+  "optimizer": {
+    "lr": 0.0001,
+    "weight_decay": 0.0,
+    "beta1": 0.9,
+    "beta2": 0.999,
+    "eps": 1e-8,
+    "warmup": 2500,
+    "grad_clip": 1.0,
+    "ema_decay": 0.9999
+  },
+  "guidance_decoding": {"temperature": 0.7, "top_p": 0.8, "top_k": 20, "max_tokens": 256},
+  "semantic_paraphrases": 5,
+  "sampling_steps": 1024,
+  "feasibility_safety_factor": 1.25,
+  "evaluation_dialogue_reserve": 3664,
+  "evaluation_reserve_basis": "(64 discovery+64 confirmation+330 fixed TopDial test)*2 protocols*4 method/budget cells; official testing remains separately gated",
+  "checkpoint_io_reserve_seconds": 14400,
+  "full_fitting_requires": ["update replay", "interactive journal replay", "budget fits remaining 58159 clock"]
+}

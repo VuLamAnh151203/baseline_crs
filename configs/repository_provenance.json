@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "source_snapshot": {
+    "repository": "https://github.com/kuduck192/crs_www.git",
+    "branch": "baseline",
+    "revision": "b2c515325f9a45a6590a8222d7c84918643607c5"
+  },
+  "fixed_1000_resource_sha256": "c0bb70f77d305616a54cfc546bb75a15ad6651c42b7ef8fa7ae98508a103af97",
+  "runtime_uv_lock_sha256": "1a9ee1879bfb20c2e611d9e927735752b545d1509dff97668cc08aec7feec43d",
+  "shared_model_lock_sha256": "b0d4adefe2022a1b20a91c25be33245973583d84082db6003c63aaa1fd836a3b",
+  "packaging_policy": {
+    "large_weights_in_git": false,
+    "official_dataset_bodies_in_git": false,
+    "private_traces_in_git": false,
+    "runtime_network_inference": false
+  }
+}

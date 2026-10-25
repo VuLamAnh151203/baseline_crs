@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "status": "pinned_and_verified",
+  "model_id": "FacebookAI/roberta-large",
+  "revision": "722cf37b1afa9454edce342e7895e588b6ff1d59",
+  "encoder": {
+    "config.json": "82ba49810e6441735e696033ac2512ee09da555507b2917ac3865b202d592cc3",
+    "merges.txt": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5",
+    "model.safetensors": "047c85f0b96269cd62e6f732644f067004eebd95af5b5d35965ae2528f13bf38",
+    "tokenizer.json": "847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e",
+    "tokenizer_config.json": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce",
+    "vocab.json": "9e7f63c2d15d666b52e21d250d2e513b87c9b713cfa6987a82ed89e5e6e50655"
+  },
+  "tokenizer": {
+    "config.json": "82ba49810e6441735e696033ac2512ee09da555507b2917ac3865b202d592cc3",
+    "merges.txt": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5",
+    "model.safetensors": "047c85f0b96269cd62e6f732644f067004eebd95af5b5d35965ae2528f13bf38",
+    "tokenizer.json": "847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e",
+    "tokenizer_config.json": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce",
+    "vocab.json": "9e7f63c2d15d666b52e21d250d2e513b87c9b713cfa6987a82ed89e5e6e50655"
+  }
+}

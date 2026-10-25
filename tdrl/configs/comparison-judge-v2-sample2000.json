@@ -1,0 +1,104 @@
+{
+  "schema_version": 2,
+  "scope": {
+    "methods": [
+      "PPDPP",
+      "TDRL-R",
+      "TDRL"
+    ],
+    "claim": "three_method_automated_comparison"
+  },
+  "datasets": [
+    "TopDial",
+    "DuRecDial2.0"
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "protocols": [
+    "profile",
+    "resistant"
+  ],
+  "turn_budget": 10,
+  "assistant_decoding": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_tokens": 128
+  },
+  "simulator_decoding": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_tokens": 128
+  },
+  "development_scenarios": 16,
+  "threshold_quantiles": [
+    0.2,
+    0.8
+  ],
+  "node_budget": 2048,
+  "candidates": 3,
+  "lookahead": 2,
+  "matched_generation_call_cap": 1,
+  "head": {
+    "seed": 17,
+    "steps": 30000,
+    "batch_size": 256,
+    "lr": 0.0003,
+    "cost": {
+      "c_step": 1.0,
+      "gamma": 1.0,
+      "negative_margin": 10.0,
+      "negative_weight": 1.0,
+      "target_tau": 0.01
+    }
+  },
+  "ppdpp": {
+    "seed": 17,
+    "sft_epochs": 10,
+    "sft_batch_size": 16,
+    "sft_lr": 6e-06,
+    "rl_lr": 1e-06,
+    "rl_episodes": 1000,
+    "gamma": 0.999,
+    "implementation_version": 2,
+    "sft_warmup_steps": 400
+  },
+  "feasibility_safety_factor": 1.25,
+  "reserve_seconds": 86400,
+  "walltime_seconds": 1728000,
+  "offline_terminal_protocol": "censored_v2",
+  "judge": {
+    "schema_version": 2,
+    "critic_samples": 10,
+    "outcome_decoding": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "top_k": -1,
+      "max_tokens": 256
+    },
+    "critic_decoding": {
+      "temperature": 1.1,
+      "top_p": 1.0,
+      "top_k": -1,
+      "max_tokens": 256
+    }
+  },
+  "public_dataset_totals": {
+    "TopDial": 18009,
+    "DuRecDial2.0": 8241
+  },
+  "public_dataset_totals_sources": {
+    "TopDial": "https://aclanthology.org/2023.emnlp-main.72.pdf",
+    "DuRecDial2.0": "https://aclanthology.org/2021.emnlp-main.356.pdf"
+  },
+  "test_sampling": {
+    "schema_version": 1,
+    "method": "pooled_uniform_without_replacement",
+    "total_scenarios": 2000,
+    "seed": 42
+  }
+}

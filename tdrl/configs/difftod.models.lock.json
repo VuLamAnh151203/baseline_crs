@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "blocked_until_bootstrap",
+  "sedd": {
+    "model_id": "louaaron/sedd-medium",
+    "revision": null,
+    "checkpoint_sha256": null,
+    "source_files": {}
+  },
+  "tokenizer": {
+    "model_id": "openai-community/gpt2",
+    "revision": null,
+    "files": {}
+  }
+}

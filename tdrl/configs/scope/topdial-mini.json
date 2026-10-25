@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "method": "SCOPE-CRS-lite",
+  "dataset": "TopDial",
+  "semantic_space": {
+    "encoder": "meta-llama/Meta-Llama-Guard-2-8B",
+    "revision": "7d257f3c1a0ec6ed99b2cb715027149dfb9784ef",
+    "embedding_dim": 1024,
+    "projection_seed": 42,
+    "transition": "official-lmsys-chat-1m-four-seed-ensemble"
+  },
+  "planning": {
+    "candidates": 5,
+    "search_depth": 6,
+    "mcts_seconds": 3.0,
+    "gamma": 0.9,
+    "uct_coefficient": 0.05,
+    "transition_samples": 4,
+    "q_learning_rate": 0.0001,
+    "q_update_steps": 50
+  },
+  "reward_training": {
+    "hidden_dims": [512, 128],
+    "epochs": 2,
+    "batch_size": 32,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "patience": 2,
+    "seed": 17,
+    "counterfactual_negatives": 1,
+    "terminal_semantic_judge": true,
+    "max_train_dialogues": 2,
+    "max_dev_dialogues": 2
+  }
+}

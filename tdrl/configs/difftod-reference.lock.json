@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/ninglab/DiffTOD",
+  "revision": "fd46b2887a9c0d9e0e413623e79c72ee32b9b7c1",
+  "files": {
+    "graph_lib.py": "e75edaeb051a0a7c624964dfe6565b236ffe8dbe24bec5eb2e86f814a70e73cf",
+    "noise_lib.py": "e78cc16c0879938b492acdd125fb9a9ab010fee9a804afae739120757b2eb127",
+    "sampling.py": "a6377eb06312be99f673fac312b5fa8c4609ae7c2fa4f23eecf3375e3e8c13a2",
+    "catsample.py": "47201e779fddcca9e21fae503878c02aaaf0c552ea85d66eb8387bdc477905bd",
+    "model/utils.py": "93322fb8e070a26367a13e23a60995ee126a1a7547e5c49d6a1884fe746a84bb"
+  }
+}

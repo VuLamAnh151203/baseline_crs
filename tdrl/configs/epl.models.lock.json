@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "status": "pinned_and_verified",
+  "policy_encoder": {
+    "model_id": "google-bert/bert-base-cased",
+    "revision": "cd5ef92a9fb2f889e972770a36d4ed042daf221e",
+    "files": {
+      "config.json": "8b73abed2d67075fd3ec0f840aa53d9cccdc9169c04a7da135c07e721910ed74",
+      "model.safetensors": "1d8bdcee6021e2c25f0325e84889b61c2eb26b843eef5659c247af138d64f050",
+      "pytorch_model.bin": "d6992b8cd27d7a132eafce6a8210272329a371b1c762d453588795dd3835593e",
+      "tokenizer.json": "5b3360be30cdf39081153cf9d30bfb0503c011462fc9f77f097127c83ef0f4d9",
+      "tokenizer_config.json": "0f6d13e6f4da6f9e24f22ada6bc3be571123d858d7c0c05a8a7cd55a9c23c2e8",
+      "vocab.txt": "eeaa9875b23b04b4c54ef759d03db9d1ba1554838f8fb26c5d96fa551df93d02"
+    }
+  },
+  "retrieval_encoder": {
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "c9745ed1d9f207416be6d2e6f8de32d1f16199bf",
+    "files": {
+      "1_Pooling/config.json": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23",
+      "config.json": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41",
+      "config_sentence_transformers.json": "061ca9d39661d6c6d6de5ba27f79a1cd5770ea247f8d46412a68a498dc5ac9f3",
+      "data_config.json": "32edcb108fc2516b920734a862ae0692bcae1c5d45d5f8d972cb0d53434a4c54",
+      "model.safetensors": "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db",
+      "modules.json": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+      "openvino/openvino_model.bin": "8b86cab4722e2aefab310cf96d4d5a9eb3b187f7d9670a082afc55c7fa0d392a",
+      "openvino/openvino_model_qint8_quantized.bin": "c92ea4af3c6bc7b4a0f3b3d61b147c850f4dbdd7c9e7beee0c0c70dc12da289b",
+      "pytorch_model.bin": "c3a85f238711653950f6a79ece63eb0ea93d76f6a6284be04019c53733baf256",
+      "sentence_bert_config.json": "fc1993fde0a95c24ec6c022539d41cf6e2f7c9721e5415d6fb6897472a9cd4b7",
+      "special_tokens_map.json": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+      "tokenizer.json": "be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037",
+      "tokenizer_config.json": "acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b",
+      "train_script.py": "f9b98b9d203d728cbf93ccdbae84131ab926541b56196f11d1385fed0b4d1a07",
+      "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+    }
+  }
+}

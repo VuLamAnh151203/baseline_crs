@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "upstream_repository": "https://github.com/cs-holder/DPDP",
+  "upstream_revision": "4d1e22e35db452d51f0f39388456d310ec1c971b",
+  "adaptation": "complete_trajectory_crs",
+  "offline_actor_loss": "-log_pi_selected * stop_gradient(return - q_selected)",
+  "offline_critic_loss": "mse(q_selected, return)",
+  "selfplay_target": "discounted_return_of_executed_mcts_trajectory",
+  "paper_code_discrepancy": "Executable released-code behavior is primary; no unused target Q-network is retained.",
+  "evaluation_success": "shared_deterministic_acceptance_only",
+  "hosted_inference": "forbidden"
+}

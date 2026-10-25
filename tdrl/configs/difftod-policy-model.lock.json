@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "metadata_pinned_not_downloaded_or_runtime_validated",
+  "policy": {
+    "model_id": "louaaron/sedd-medium",
+    "revision": "ce71a3c6178b50e899c8be1a1a4c13130308e54f",
+    "files": {
+      "config.json": "f77926529f6ee5b913981775ebd2f8560c271341ad6dc67a0eab4c56eb032ec5",
+      "README.md": "6046f0883fc8f9922303f45786ad58a96167f27f8ba736d71fc52a7c53ad3caf",
+      "pytorch_model.bin": "d93bb0dd1013295a4865848ea546ee3763a5be036cf55ea407e898c0a7a82a33"
+    }
+  },
+  "tokenizer": {
+    "model_id": "openai-community/gpt2",
+    "revision": "607a30d783dfa663caf39e06633721c8d4cfcd7e",
+    "files": {
+      "tokenizer.json": "8414cab924d8b9b33013f0d221c5862f365ee9be39c5c2bfae8a5a9e970478a6",
+      "tokenizer_config.json": "5e04eb606e3a1583530a42e36c2a6b6615c86f34fe77e44d9ddeb43ff940931f",
+      "vocab.json": "196139668be63f3b5d6574427317ae82f612a97c5d1cdaf36ed2256dbf636783",
+      "merges.txt": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5"
+    }
+  },
+  "weight_size_bytes": 1698000441,
+  "precision": "bfloat16",
+  "role": "intrinsic_diffusion_policy_not_generation_backbone"
+}

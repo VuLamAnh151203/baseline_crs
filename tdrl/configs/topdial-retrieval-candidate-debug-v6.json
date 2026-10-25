@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "scope": "post-test MRN-only retrieval-candidate development diagnostic",
+  "source": "artifacts/two-gpu-58159",
+  "head_source": "artifacts/head-numerics-v2-58159",
+  "comparison_config": "configs/comparison-judge-v2-sample500-seed17.json",
+  "seed": 17,
+  "development_offset": 16,
+  "development_count": 64,
+  "calibration_count": 16,
+  "edge_quantile": 0.8,
+  "coverage_quantile": 0.75,
+  "protocols": [
+    "profile",
+    "resistant"
+  ],
+  "planner_revision": 2,
+  "official_test": "sealed_for_this_diagnostic",
+  "variants": {
+    "0": [
+      "repair-MRNFixed-R"
+    ],
+    "1": [
+      "repair-MRNFixed-Full"
+    ]
+  },
+  "reference_scope": "exact_target_when_supported",
+  "reference_selection": "nearest_entry",
+  "head_types": [
+    "MRNFixed"
+  ],
+  "evaluation_slots": [
+    0,
+    1
+  ],
+  "preserve_retrieval_candidate": true
+}

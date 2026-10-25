@@ -1,0 +1,384 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-12",
+  "source_pdf": "TDRL_WWW_Feedback_and_Experiment_Guidelines.pdf",
+  "source_sha256": "af54dd69e5fe8431302e21bf99e28587cf137c8ae4f0d7bcda32c301834fad82",
+  "inspected_commit": "1dd0169",
+  "scope": "Read-only implementation/evidence audit; no new inference or protocol changes. PDF recommendations do not override user-authorized scope.",
+  "status_definitions": {
+    "implemented": "The bounded requirement has executable code or a verified generated artifact; this does not certify the full scientific contribution.",
+    "partial": "Some executable components or results exist, but the requested comparison or report is incomplete.",
+    "missing": "No executable experiment and corresponding result located in the inspected repository; prose/config names alone do not count.",
+    "excluded": "Explicitly excluded by the user's current scope; not an implementation failure."
+  },
+  "verification_limit": "Local report manifest and all seven report output hashes verified. Report aggregates account for 4000 dialogues across 16 cells. Full remote test records and head artifacts were not re-audited because SSH banner exchange timed out; local development reports are available but their remote source records are not mirrored locally.",
+  "requirements": [
+    {
+      "id": 1,
+      "pages": "2",
+      "requirement": "Correct positive-cost Bellman signs, goal/predecessor masks, detached targets and separate success reward",
+      "status": "implemented",
+      "evidence": "src/tdrl/learning.py; tests/test_core.py; configs/comparison-judge-v2-sample500-seed17.json",
+      "limitation": "Current c_step=1 and gamma=1 replace historical appendix parameters; no cosine-bound saturation claim is valid."
+    },
+    {
+      "id": 2,
+      "pages": "1,5,8",
+      "requirement": "Directed geometry used for retrieval, graph edges, coverage and leaf scoring",
+      "status": "implemented",
+      "evidence": "src/tdrl/reachability.py; graph.py; planner.py",
+      "limitation": "Shared implementation is not evidence that sharing improves performance."
+    },
+    {
+      "id": 3,
+      "pages": "3",
+      "requirement": "Both datasets, train/dev separation, immutable membership and duplicate audit",
+      "status": "implemented",
+      "evidence": "data/processed/data-manifest.json; src/tdrl/official_data.py; near_duplicates.py; test_sampling.py",
+      "limitation": "Audit establishes recorded exact/Jaccard checks, not absence of every semantic duplicate."
+    },
+    {
+      "id": 4,
+      "pages": "3,4",
+      "requirement": "Shared response backbone, context, turn cap, simulator and stopping protocol",
+      "status": "implemented",
+      "evidence": "configs/comparison-judge-v2-sample500-seed17.json; src/tdrl/evaluation.py; report manifest",
+      "limitation": "Same-family simulated users are not live-user evidence."
+    },
+    {
+      "id": 5,
+      "pages": "2,3",
+      "requirement": "Distinguish designated-target acceptance from mention or acceptance of another item",
+      "status": "implemented",
+      "evidence": "src/tdrl/judge.py; JUDGE_SCHEMA and indexed observed evidence validation",
+      "limitation": "Human validation of these judgments remains missing; graph anchors have different semantics."
+    },
+    {
+      "id": 6,
+      "pages": "2,3,4",
+      "requirement": "Actual experimental seeds and scenario-paired uncertainty",
+      "status": "implemented",
+      "evidence": "src/tdrl/metrics.py; artifacts/two-gpu-58159/report/paired-*.json; experimental_seeds=[17]",
+      "limitation": "Scenario-paired CIs do not quantify training-seed variability."
+    },
+    {
+      "id": 7,
+      "pages": "3",
+      "requirement": "IDs, model/prompt/config provenance, routing/candidate traces and replay",
+      "status": "implemented",
+      "evidence": "src/tdrl/provenance.py; backend.py; stages.py; resources/test_scenarios_500_seed42.json; selection/selection.lock",
+      "limitation": "Raw remote journals not re-downloaded in this audit."
+    },
+    {
+      "id": 8,
+      "pages": "4",
+      "requirement": "Complete main-results comparison on both datasets",
+      "status": "partial",
+      "evidence": "artifacts/two-gpu-58159/report/report.json: PPDPP/R/Full, both protocols, 500 scenarios, root seed 17",
+      "limitation": "Scoped comparison exists; guidelines' full baseline set and quality columns do not."
+    },
+    {
+      "id": 9,
+      "pages": "2,4",
+      "requirement": "Faithful closest baselines and adaptation disclosure",
+      "status": "partial",
+      "evidence": "src/tdrl/ppdpp.py; policy_training.py; docs/BASELINES.md; PPDPP_REWARD_AUDIT.md",
+      "limitation": "PPDPP implemented with disclosed weak CRS labels. DPDP/TRIP/DiffTOD only pinned/design; PDF ProCoT/EnPL/T-EPL/SCOPE not implemented and superseded by user baseline priorities."
+    },
+    {
+      "id": 10,
+      "pages": "3,4",
+      "requirement": "SR, all-dialogue AvgT, measured calls/tokens/H100 seconds and paired SR differences",
+      "status": "implemented",
+      "evidence": "src/tdrl/metrics.py; comparison.py; artifacts/two-gpu-58159/report/report.json",
+      "limitation": "Cost currently describes evaluation-loop compute, not isolated serving cost."
+    },
+    {
+      "id": 11,
+      "pages": "2,3,4",
+      "requirement": "Success-by-turn curves and successful-dialogue turns",
+      "status": "missing",
+      "evidence": "metrics.aggregate and report export inspected",
+      "limitation": "Actual turn counts are recorded but these requested summaries/curves are not generated."
+    },
+    {
+      "id": 12,
+      "pages": "3,4,6",
+      "requirement": "Naturalness, suitability, preference consistency, coherence, factuality and pressure metrics",
+      "status": "missing",
+      "evidence": "Judge labels and refusal flags exist; no quality scoring/report pipeline located",
+      "limitation": "Refusal guard or success judge alone is not dialogue-quality evaluation."
+    },
+    {
+      "id": 13,
+      "pages": "4,9",
+      "requirement": "Separate serving, simulator/evaluation-judge, offline training and graph-construction costs",
+      "status": "partial",
+      "evidence": "Role-tagged request traces and stage compute exist; evaluation.py: actual_gen and elapsed",
+      "limitation": "Report totals include outcome judge and simulator; no serving-only total or latency panel."
+    },
+    {
+      "id": 14,
+      "pages": "2,7",
+      "requirement": "Explicit coverage/recovery denominators and measured re-entry/later success",
+      "status": "partial",
+      "evidence": "planner.py logs covered/recovery; evaluation.py records actual_turns and full-budget turns",
+      "limitation": "No aggregate reconciliation panel or recovery-success definition/report located."
+    },
+    {
+      "id": 15,
+      "pages": "5",
+      "requirement": "R, random routing and always-rollout ablations with realized budget controls",
+      "status": "partial",
+      "evidence": "PlannerConfig routing supports retrieval_only/random/always; R comparison exists",
+      "limitation": "Random/always experiment results not located; one-call matched Full disables rollout."
+    },
+    {
+      "id": 16,
+      "pages": "5",
+      "requirement": "Direct guidance without Dijkstra and uniform edges at fixed topology",
+      "status": "missing",
+      "evidence": "graph.py/planner.py and executable experiment configurations inspected",
+      "limitation": "No frozen ablation adapters or paired evidence."
+    },
+    {
+      "id": 17,
+      "pages": "5,8",
+      "requirement": "Frozen generic, capacity-matched contrastive/temporal and Bellman representation controls",
+      "status": "missing",
+      "evidence": "reachability.py and training.py inspected",
+      "limitation": "MRN versus IQE does not isolate Bellman supervision from other training objectives."
+    },
+    {
+      "id": 18,
+      "pages": "5",
+      "requirement": "Same-candidate alternative scorers and best-of-K without lookahead",
+      "status": "missing",
+      "evidence": "planner.py leaf scoring and debug configs inspected",
+      "limitation": "Nearest-reference guidance diagnostic is not the requested same-candidate scorer comparison."
+    },
+    {
+      "id": 19,
+      "pages": "5",
+      "requirement": "Router/scorer interaction or separately trained detector for shared-geometry claim",
+      "status": "missing",
+      "evidence": "No executable interaction/detector experiment located",
+      "limitation": "Sharing one head across roles does not establish a benefit."
+    },
+    {
+      "id": 20,
+      "pages": "6",
+      "requirement": "Human study preparation with institutional determination and pilot/power planning",
+      "status": "partial",
+      "evidence": "docs/EXPERIMENT_PLAN.md human-study protocol",
+      "limitation": "General safeguards and fixed 100/dataset design exist; determination ID, pilot, power analysis and operational recruitment packet not located."
+    },
+    {
+      "id": 21,
+      "pages": "6",
+      "requirement": "Blinded human evaluation, ties, agreement and clustered uncertainty",
+      "status": "missing",
+      "evidence": "No current human annotations/results located",
+      "limitation": "Historical draft's 50-dialogue study is not evidence for this rebuild."
+    },
+    {
+      "id": 22,
+      "pages": "6",
+      "requirement": "Stratified human audit of automatic successes/failures and moderator errors",
+      "status": "missing",
+      "evidence": "No moderator-human agreement artifact located",
+      "limitation": "No annotations may be collected before institutional determination."
+    },
+    {
+      "id": 23,
+      "pages": "7",
+      "requirement": "Paired graph-versus-rollout interventions at identical prefixes with independent repeated continuations",
+      "status": "missing",
+      "evidence": "Current evaluation runs separate full dialogues; no intervention experiment runner located",
+      "limitation": "Paired scenario IDs do not create paired identical-prefix interventions."
+    },
+    {
+      "id": 24,
+      "pages": "7",
+      "requirement": "Intervention-benefit routing controls: random, turn index, generic distance, confidence and oracle",
+      "status": "missing",
+      "evidence": "Random routing primitive exists; no benefit-estimation/control experiment",
+      "limitation": "No estimate of Delta(s), harmful-intervention rate or benefit at fixed intervention budget."
+    },
+    {
+      "id": 25,
+      "pages": "7",
+      "requirement": "Relevant-support removal versus equal-size random/unrelated removal",
+      "status": "missing",
+      "evidence": "No controlled support-removal manifests or runner located",
+      "limitation": "Exact-target reference-pool filtering is not a controlled support-removal experiment."
+    },
+    {
+      "id": 26,
+      "pages": "8",
+      "requirement": "Held-out reachability geometry and forward/reverse/horizon diagnostics",
+      "status": "partial",
+      "evidence": "training.py:heldout_temporal_diagnostics; head numerical diagnostic code and dev reports",
+      "limitation": "Chronology covers only part of required target mismatch, rejection, preference conflict and feasible cross-trajectory pair set; remote head evidence not re-audited."
+    },
+    {
+      "id": 27,
+      "pages": "8",
+      "requirement": "Repeated-controller reachability and graph-edge execution validation plus blinded feasibility judgments",
+      "status": "missing",
+      "evidence": "No edge-execution/reachability annotation experiment located",
+      "limitation": "Quasimetric invariants do not prove an edge is executable in dialogue."
+    },
+    {
+      "id": 28,
+      "pages": "8",
+      "requirement": "Collapse diagnostics: embedding variance, pair-distance distributions and hard confounders",
+      "status": "partial",
+      "evidence": "Invariant/finiteness and chronological forward/reverse means exist",
+      "limitation": "Complete variance/distribution/confounder panel not located."
+    },
+    {
+      "id": 29,
+      "pages": "2,8",
+      "requirement": "Own-history failure prediction at fixed early turns 1/2/3, active counts and prevalence",
+      "status": "missing",
+      "evidence": "No early-prefix prediction runner or report located",
+      "limitation": "Completed-dialogue analyses and generic observed_prefix utility do not satisfy this requirement."
+    },
+    {
+      "id": 30,
+      "pages": "8",
+      "requirement": "Prediction controls and AUROC/AUPRC, recall, lead time and leave-one-agent-out transfer",
+      "status": "missing",
+      "evidence": "No classifier/control/evaluation pipeline located",
+      "limitation": "Held-out remaining-step correlation is not early-failure AUROC/AUPRC."
+    },
+    {
+      "id": 31,
+      "pages": "9",
+      "requirement": "SR-cost frontier, latency p50/p95 and independent H_edge/H_cover/K/L/bank sweeps",
+      "status": "partial",
+      "evidence": "Selection threshold grid and runtime/request telemetry exist",
+      "limitation": "No multi-budget frontier or K/L/bank sweep; development preflight p95 is not the full final-method latency report."
+    },
+    {
+      "id": 32,
+      "pages": "9",
+      "requirement": "Explicit fallback for unseen targets and separate unfamiliar-combination evaluation",
+      "status": "partial",
+      "evidence": "training.make_graph exact_target_when_supported; target-pool TopDial diagnostics",
+      "limitation": "Goal-type transfer fallback is explicit in new debug path, but targeted unseen-target robustness comparisons on both datasets are missing."
+    },
+    {
+      "id": 33,
+      "pages": "9",
+      "requirement": "Different-family lookahead/evaluation simulator transfer",
+      "status": "missing",
+      "evidence": "One locked Qwen family throughout; profile/resistant protocols",
+      "limitation": "Requires a separately authorized model/runtime amendment; current same-family simulation cannot establish this transfer."
+    },
+    {
+      "id": 34,
+      "pages": "9",
+      "requirement": "Independent preference changes, constraints, topic detours and rejecting-user perturbations",
+      "status": "partial",
+      "evidence": "evaluation.simulator_prompt supports frozen resistant profile",
+      "limitation": "No independently specified perturbation grid or performance-change table."
+    },
+    {
+      "id": 35,
+      "pages": "9",
+      "requirement": "Second response-backbone generator transfer",
+      "status": "excluded",
+      "evidence": "User expressly excludes cross-LLM-backbone comparisons; AGENTS.md and EXPERIMENT_PLAN.md",
+      "limitation": "Intentional scoped exclusion, not a bug; do not claim generator transfer."
+    },
+    {
+      "id": 36,
+      "pages": "1,10",
+      "requirement": "Artifact-backed main/ablation/human/mechanism exhibits and coherent venue/paper delivery",
+      "status": "missing",
+      "evidence": "Scoped JSON/Markdown report exists; tdrl/paper is empty",
+      "limitation": "No new paper, required exhibit package, format validation or inspected PDF; guidelines assume WWW while repository method scope says EMNLP 2026."
+    }
+  ],
+  "inconsistencies": [
+    {
+      "id": "I1",
+      "severity": "scientific semantics",
+      "finding": "Graph goals are pre-response states whose next assistant utterance contains the target string, not independently judged user-acceptance states.",
+      "evidence": "src/tdrl/training.py:47 and 377",
+      "impact": "Distance/path progress is progress toward a target-mention guidance anchor; it cannot by itself be interpreted as distance to successful acceptance."
+    },
+    {
+      "id": "I2",
+      "severity": "learning semantics",
+      "finding": "Censored cross-trajectory pairs are explicitly pushed to distance >= negative_margin despite no demonstrated unreachability.",
+      "evidence": "training.PairSampler samples 25% cross-trajectory negatives; learning.ReachabilityLearner.step applies hinge separation",
+      "impact": "Prose says not universally unreachable, but optimization still repels potentially feasible cross-trajectory states. Need validated negatives, sensitivity or narrower interpretation; not proof every negative is wrong."
+    },
+    {
+      "id": "I3",
+      "severity": "compute comparison",
+      "finding": "Matched Full has generation_call_cap=1 while three branches x two lookahead require a planned 12 calls; recovery is disabled.",
+      "evidence": "configs/comparison-judge-v2-sample500-seed17.json; planner.py:141-147",
+      "impact": "This is a disclosed one-call-cap fallback control, not a useful full-planner matched-compute comparison; calls cap does not match tokens/H100 seconds."
+    },
+    {
+      "id": "I4",
+      "severity": "cost interpretation",
+      "finding": "Dialogue generation totals and wall/H100 seconds include the outcome judge and evaluation user simulator.",
+      "evidence": "evaluation.py:260,282,326-340; comparison.report",
+      "impact": "Valid evaluation-loop resource accounting, but cannot be labeled isolated serving cost without role/time separation. Guidelines exclude offline evaluation judges from serving cost."
+    },
+    {
+      "id": "I5",
+      "severity": "algorithm description",
+      "finding": "PDF describes minimum distance over lookahead; current Full scores final leaf only, with entry distance plus remaining directed path cost in revision 2.",
+      "evidence": "PDF p5; planner.py:232-246",
+      "impact": "Document the intentional rebuild difference and compare scorer variants before attributing the historical mechanism to current code. Max negative value and min cost remain equivalent."
+    },
+    {
+      "id": "I6",
+      "severity": "terminal handling",
+      "finding": "Real dialogues use semantic outcome/refusal judgment, but hypothetical rollout branches stop via lexical refusal and never semantic goal achievement.",
+      "evidence": "evaluation.py:260 and 317; planner.py:208",
+      "impact": "A hypothetical accepted branch may continue and be ranked by reachability instead of acceptance. This is a code-level risk; frequency/causal contribution is not yet measured."
+    },
+    {
+      "id": "I7",
+      "severity": "documentation",
+      "finding": "STATUS.md dated 2026-10-03 still says no H100 smoke, checkpoints, lock or report; EXPERIMENT_PLAN retains original deterministic-acceptance and one-GPU/three-seed/full-test plan.",
+      "evidence": "docs/STATUS.md; docs/EXPERIMENT_PLAN.md; complete report manifest and later AGENTS amendments",
+      "impact": "Historical snapshots are not authoritative current status. Their assertions conflict with newer artifacts if read as current instructions."
+    },
+    {
+      "id": "I8",
+      "severity": "ablation isolation",
+      "finding": "Full does not guarantee retaining the exact R response as a candidate; candidate 0 and R use different derived seed purposes.",
+      "evidence": "planner.py candidate generation versus /final seed path",
+      "impact": "Full-versus-R compares a recovery mechanism that also changes realized response candidates. It is not a claim that Full must always win; preserve seeds/budgets when redesigning controls."
+    }
+  ],
+  "intentional_scope_differences": [
+    "500 fixed scenarios and one experimental seed supersede PDF approximate 2000-scenario suggestion and old three-seed plan by explicit user request.",
+    "User baseline priority is PPDPP/DPDP/TRIP/DiffTOD; PDF also recommends ProCoT/EnPL/T-EPL/SCOPE. Do not silently expand or relabel baseline scope.",
+    "Cross-backbone comparison is excluded; different-family simulator study is outside current pinned local-Qwen runtime contract.",
+    "Current debugging focuses MRN only; retain IQE historical evidence rather than claim current exhaustive head comparison.",
+    "Guidelines' historical cosine and Bellman parameters are review context, not current runtime specifications.",
+    "WWW positioning in the PDF and EMNLP 2026 in AGENTS require a venue decision before paper delivery; this audit does not change the venue."
+  ],
+  "priorities": [
+    "Finish MRN discovery diagnostic and validate leaf/goal semantics using the frozen local judge before another planner change.",
+    "Implement identical-prefix paired intervention with independent continuations; do not substitute full-dialogue scenario pairing.",
+    "Implement own-history early-prefix failure prediction and controlled support removal.",
+    "Generate missing turn/denominator/role-separated cost summaries from immutable traces; add random/always routing controls at meaningful measured budgets.",
+    "Prepare pilot/power and institutional human-study determination; no label collection until approved."
+  ],
+  "counts": {
+    "implemented": 8,
+    "partial": 11,
+    "missing": 16,
+    "excluded": 1
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "scope": "User-amended fixed 1000: 500 TopDial + 500 DuRecDial; initial 200 each",
+  "candidate_lock": "artifacts/topdial-target-grounding-v12-discovery-v1-58159/candidate.lock",
+  "confirmation_queue": "artifacts/topdial-v12-confirmation-58159/queue-status.json",
+  "candidate_config": "configs/topdial-semantic-strategy-debug-v12.json",
+  "difftod_fitting": "artifacts/difftod-topdial-fit-v1-58159",
+  "methods": [
+    "TDRL",
+    "DiffTOD"
+  ],
+  "protocols": [
+    "profile",
+    "resistant"
+  ],
+  "root_seed": 17,
+  "budget": "natural",
+  "default_prefix_count": 400,
+  "max_prefix_count": 1000,
+  "order": "first_200_TopDial_then_200_DuRecDial_then_300_TopDial_then_300_DuRecDial",
+  "ready_datasets": [
+    "TopDial",
+    "DuRecDial2.0"
+  ],
+  "extension_gate": "Same source, selection, fixed IDs/order, output root and journals; count 400 initially, 1000 finally",
+  "durecdial_fitting": "artifacts/difftod-durecdial-fit-v1-58159",
+  "durecdial_source": "artifacts/two-gpu-58159",
+  "durecdial_preflight": "artifacts/difftod-durecdial-preflight-v1-58159",
+  "durecdial_head": "IQE"
+}

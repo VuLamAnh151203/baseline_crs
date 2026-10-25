@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "scope": "post-test development-only planner diagnostic",
+  "source": "artifacts/two-gpu-58159",
+  "comparison_config": "configs/comparison-judge-v2-sample500-seed17.json",
+  "seed": 17,
+  "development_offset": 16,
+  "development_count": 64,
+  "calibration_count": 16,
+  "coverage_quantile": 0.75,
+  "protocols": ["profile", "resistant"],
+  "planner_revision": 2,
+  "official_test": "sealed_for_this_diagnostic",
+  "variants": {
+    "0": ["PPDPP", "legacy-IQE-R", "legacy-IQE-Full"],
+    "1": ["repair-MRNFixed-R", "repair-MRNFixed-Full", "repair-IQE-R", "repair-IQE-Full"]
+  }
+}

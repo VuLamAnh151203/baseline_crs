@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "scope": "MRN-only diagnostic semantic audit, zero training updates, no comparison-budget amendment",
+  "seed": 17,
+  "input": "artifacts/topdial-reference-audit-58159/rollout-terminal-audit-inputs.json",
+  "input_sha256": "d2f9e28fb356340525d65c6fee04ca02a3fecf82ad3f399d6713d60eb78bffac",
+  "comparison_config": "configs/comparison-judge-v2-sample500-seed17.json",
+  "comparison_sha256": "6469f346dee018ad2f49fb8119e3a6cd68cd1fe4f2af70c2d9f697fa20d0b123",
+  "branches": 48,
+  "prefixes": 70
+}

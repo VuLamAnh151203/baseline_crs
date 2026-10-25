@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "method": "EnPL",
+  "profile": "tdrl_domain_adapted",
+  "data": {
+    "expected_source_zip_sha256": "be487e50e95a202645b3dcc6440cb5d88cb113ae9fee2e73017502ff7bd002d3",
+    "expected_source_member_sha256": "cbb8c656455ecfd3b45defa0d7d2c3b56f19637a9f5988166d9bc2eee5ea6b28",
+    "require_verified_training_bank": true
+  },
+  "filtering": {
+    "expected_candidates_per_record": 10,
+    "keep_per_conversation": 2,
+    "extractor": "independent_token_textrank_v1",
+    "keyword_budget": 20,
+    "sequence_order": "first_occurrence",
+    "empty_sequence_policy": "invalid",
+    "tie_break": "candidate_index"
+  },
+  "retrieval": {
+    "strategy": "domain_conditioned_entity_overlap_cardinality",
+    "k": 3,
+    "distinct_source_conversations": true,
+    "same_domain_only": true,
+    "zero_overlap_fallback": "same_domain_consistency_then_deterministic"
+  },
+  "planning": {
+    "replan_each_turn": true,
+    "mode": "history_conditioned",
+    "semantic_regeneration_attempts": 0
+  },
+  "context": {
+    "max_input_characters": 12000,
+    "overflow_policy": "drop_lowest_ranked_examples_then_fail_closed",
+    "preserve": ["target", "profile", "knowledge", "observed_history"]
+  },
+  "plan_decoding": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_tokens": 256
+  },
+  "provenance_labels": {
+    "filtering.expected_candidates_per_record": "P:section_3.1.2",
+    "filtering.keep_per_conversation": "P:section_3.1.2",
+    "filtering.extractor": "D:paper_only_specifies_TextRank",
+    "filtering.keyword_budget": "D:guide_default",
+    "retrieval.strategy": "A:paper_movie_overlap_generalized_to_target_domain_entities",
+    "retrieval.k": "P:section_5.4_figure_3",
+    "retrieval.distinct_source_conversations": "D:deterministic_reconstruction",
+    "retrieval.same_domain_only": "A:prevent_cross_domain_zero_overlap_fallback",
+    "planning.replan_each_turn": "P:appendix_A.3.2",
+    "planning.mode": "A:shared_interactive_history",
+    "context": "D:conservative_bound_for_shared_4096_token_server",
+    "plan_decoding": "A:shared_Qwen_decoding_with_256_plan_token_bound"
+  }
+}

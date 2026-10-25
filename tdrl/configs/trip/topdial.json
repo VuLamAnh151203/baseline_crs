@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "model": {
+    "hidden_size": 768,
+    "decoder_layers": 6,
+    "attention_heads": 8,
+    "feedforward_size": 3072,
+    "max_positions": 512,
+    "dropout": 0.1,
+    "init_std": 0.02,
+    "beta": 0.1,
+    "gamma": 1.0,
+    "tau": 0.1
+  },
+  "training": {
+    "batch_size": 8,
+    "gradient_accumulation": 1,
+    "epochs": 10,
+    "learning_rate": 0.00002,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01,
+    "gradient_clip": 0.5,
+    "evaluate_every": 1000,
+    "checkpoint_every": 1000,
+    "seed": 17,
+    "num_negatives": 3
+  },
+  "decoding": {
+    "beam_size": 3,
+    "max_plan_tokens": 80,
+    "min_plan_tokens": 1,
+    "lambda_scale": 3.0,
+    "repetition_penalty": 1.0
+  },
+  "max_context_tokens": 512,
+  "max_plan_tokens": 128
+}

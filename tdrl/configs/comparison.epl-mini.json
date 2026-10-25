@@ -1,0 +1,47 @@
+{
+  "schema_version": 2,
+  "scope": {
+    "methods": ["EPL"],
+    "claim": "single_method_shared_fixed1000_evaluation"
+  },
+  "datasets": ["TopDial", "DuRecDial2.0"],
+  "seeds": [17],
+  "protocols": ["profile", "resistant"],
+  "turn_budget": 10,
+  "budgets": ["natural"],
+  "development_scenarios": 1,
+  "assistant_decoding": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_tokens": 128
+  },
+  "simulator_decoding": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_tokens": 128
+  },
+  "judge": {
+    "schema_version": 2,
+    "critic_samples": 10,
+    "outcome_decoding": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "top_k": -1,
+      "max_tokens": 256
+    },
+    "critic_decoding": {
+      "temperature": 1.1,
+      "top_p": 1.0,
+      "top_k": -1,
+      "max_tokens": 256
+    }
+  },
+  "test_sampling": {
+    "schema_version": 1,
+    "method": "pooled_uniform_without_replacement",
+    "total_scenarios": 500,
+    "seed": 42
+  }
+}

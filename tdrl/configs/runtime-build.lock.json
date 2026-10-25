@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "vllm_version": "0.30.0+cu129",
+  "vllm_wheel_url": "https://github.com/vllm-project/vllm/releases/download/v0.30.0/vllm-0.30.0%2Bcu129-cp38-abi3-manylinux_2_28_x86_64.whl",
+  "vllm_wheel_sha256": "e98cb69659bfcfc849cf11ce0781a7161d40b02b51a6c3636924a5909f2aabcc",
+  "torch_version": "2.13.0+cu129",
+  "torch_index": "https://download.pytorch.org/whl/cu129",
+  "observed_worker_driver": "570.133.20",
+  "failed_runtime_probe": "56975",
+  "status": "bootstrap_pin_not_h100_validated",
+  "compatibility_basis": "CUDA 12.x minor-version compatibility; actual PTX/kernel compatibility remains a Gate 2 obligation",
+  "sources": [
+    "https://github.com/vllm-project/vllm/releases/tag/v0.30.0",
+    "https://docs.nvidia.com/deploy/cuda-compatibility/minor-version-compatibility.html"
+  ],
+  "torchvision_version": "0.28.0+cu129",
+  "torchaudio_version": "2.11.0+cu129",
+  "failed_import_probe": "56976",
+  "torchcodec_version": "0.16.0+cu129"
+}

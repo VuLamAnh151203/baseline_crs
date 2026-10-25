@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "sources": {
+    "PPDPP": {
+      "repository": "https://github.com/dengyang17/PPDPP",
+      "revision": "f44dccdd43f335e5e5f372ab556cfd9f182f9c55",
+      "status": "reference_pinned_not_adapted"
+    },
+    "DPDP": {
+      "repository": "https://github.com/cs-holder/DPDP",
+      "revision": "4d1e22e35db452d51f0f39388456d310ec1c971b",
+      "status": "reference_pinned_not_adapted"
+    },
+    "TRIP": {
+      "repository": "https://github.com/iwangjian/TRIP",
+      "revision": "ee845a5306902ae673e92083711b283b9f33bb9f",
+      "status": "reference_pinned_not_adapted"
+    },
+    "DiffTOD": {
+      "repository": "https://github.com/ninglab/DiffTOD",
+      "revision": "fd46b2887a9c0d9e0e413623e79c72ee32b9b7c1",
+      "status": "reference_pinned_not_adapted"
+    },
+    "TopDial": {
+      "repository": "https://github.com/iwangjian/TopDial",
+      "revision": "f424ab520016feb1352dd8c79ebc1fabb438bf47",
+      "status": "reference_pinned_not_adapted"
+    },
+    "DuRecDial2.0": {
+      "repository": "https://github.com/liuzeming01/DuRecDial",
+      "revision": "1309cc072afd0b832e899e49c62906e700ff6acf",
+      "status": "reference_pinned_not_adapted"
+    },
+    "quasimetric_reference": {
+      "repository": "https://github.com/quasimetric-learning/torch-quasimetric",
+      "revision": "0365394d4ecbd614f38775787af724d8b142c9d2",
+      "status": "reference_pinned_not_adapted"
+    }
+  }
+}
