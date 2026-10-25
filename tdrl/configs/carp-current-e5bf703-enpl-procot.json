@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "status": "frozen",
+  "integration": "native_enpl_procot_to_carp_current_v1",
+  "carp": {
+    "repository": "/home/u26anhvl/crs/carp_www",
+    "commit": "e5bf7034d7526bcc9cf6869666e8bebc80d36cc0",
+    "protocol": "current CARP test200 batch-invariant evaluation",
+    "sample_seed": 42,
+    "max_turns": 10,
+    "topdial_min_success_turn": 1,
+    "durecdial_min_success_turn": 2,
+    "simulator_moderator_temperature": 0.0,
+    "simulator_moderator_max_output_tokens": 3072,
+    "quality_scale": [0, 3]
+  },
+  "methods": {
+    "enpl_domain3": {
+      "core": "unchanged EnPL-domain3 native planner",
+      "planning_calls_per_turn": 1,
+      "realization_calls_per_turn": 1,
+      "retrieval_k": 3,
+      "bank": "/mnt/data/u26anhvl/crs/enpl/enpl-fixed1000-60429/bank/plan-bank.jsonl"
+    },
+    "procot": {
+      "core": "unchanged ProCoT one-call native planner",
+      "assistant_calls_per_turn": 1,
+      "checkpoint": null
+    }
+  },
+  "model": {
+    "id": "Qwen/Qwen3.5-9B",
+    "precision": "bfloat16",
+    "thinking": false,
+    "quantization": null,
+    "server": "vLLM 0.30 plus PR 60033 batch-invariant patch",
+    "max_model_len": 16384,
+    "max_num_seqs": 256,
+    "max_num_batched_tokens": 32768
+  },
+  "evaluation_only": true,
+  "retraining_required": false,
+  "coverage_split_available": false
+}
