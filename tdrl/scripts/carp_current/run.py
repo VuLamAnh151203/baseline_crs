@@ -152,7 +152,7 @@ def evaluate(args: argparse.Namespace) -> None:
 
     def build_adapter(name: str, **kwargs: Any):
         if name == args.method:
-            return factory.build()
+            return factory.build(opening_adapter=original_builder("llm", **kwargs))
         return original_builder(name, **kwargs)
 
     carp_runner.build_assistant_adapter = build_adapter

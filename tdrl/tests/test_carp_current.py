@@ -64,6 +64,12 @@ class FakePlanner:
         return Plan("answer", False, None, {}, [], None, [], {"generation_requests": 1}, [request_id])
 
 
+class FakeOpening:
+    def generate_reply(self, scenario, history):
+        assert not history
+        return f"opening for {scenario.id}"
+
+
 def test_scenario_and_history_translation_exposes_no_released_messages():
     scenario = FakeScenario()
     native = scenario_to_native(scenario)
@@ -84,6 +90,7 @@ def test_adapter_preserves_native_planner_and_reports_per_dialogue_compute():
         root_seed=17,
         request_namespace="contract",
         method_provenance={"policy_version": "test"},
+        opening_adapter=FakeOpening(),
     )
     result = adapter.generate_reply(
         scenario,
@@ -99,5 +106,10 @@ def test_adapter_preserves_native_planner_and_reports_per_dialogue_compute():
         "assistant_total_tokens": 12,
         "assistant_generation_latency_s": 0.25,
     }
-    adapter.generate_reply(FakeScenario(id="scenario-2"), [])
+    assert adapter.generate_reply(FakeScenario(id="scenario-2"), []) == "opening for scenario-2"
     assert len(adapter.get_assistant_meta()["turn_traces"]) == 1
+    assert adapter.get_assistant_meta()["turn_traces"][0]["plan_compute"] == {
+        "strategy": "carp-current-shared-opening",
+        "method_core_invoked": False,
+        "generation_requests": 1,
+    }

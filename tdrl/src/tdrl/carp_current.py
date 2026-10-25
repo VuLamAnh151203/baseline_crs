@@ -58,6 +58,7 @@ class NativePlannerCarpAdapter:
         root_seed: int,
         request_namespace: str,
         method_provenance: dict[str, Any],
+        opening_adapter: Any,
     ) -> None:
         if method not in SUPPORTED_METHODS:
             raise ValueError(f"unsupported CARP baseline method: {method}")
@@ -68,6 +69,7 @@ class NativePlannerCarpAdapter:
         self.root_seed = int(root_seed)
         self.request_namespace = str(request_namespace)
         self.method_provenance = dict(method_provenance)
+        self.opening_adapter = opening_adapter
         self._scenario_id: str | None = None
         self._turn_traces: list[dict[str, Any]] = []
 
@@ -79,6 +81,30 @@ class NativePlannerCarpAdapter:
 
     def generate_reply(self, scenario: Any, history: list[Any]) -> str:
         self._reset_for(scenario)
+        if not history:
+            response = self.opening_adapter.generate_reply(scenario, history)
+            self._turn_traces.append(
+                {
+                    "turn_index": 0,
+                    "request_id": None,
+                    "response_sha256": digest(response),
+                    "replay_ids": [],
+                    "plan_compute": {
+                        "strategy": "carp-current-shared-opening",
+                        "method_core_invoked": False,
+                        "generation_requests": 1,
+                    },
+                    "generation": {
+                        "requests": 1,
+                        "input_tokens": 0,
+                        "output_tokens": 0,
+                        "total_tokens": 0,
+                        "latency_s": 0.0,
+                        "token_counts_available": False,
+                    },
+                }
+            )
+            return response
         native_scenario = scenario_to_native(scenario)
         planner = self.planner_factory(native_scenario)
         turn_index = sum(1 for message in history if str(message.role) == "assistant")
@@ -233,7 +259,7 @@ class AdapterFactory:
             self.enpl_config["context"]["max_input_characters"],
         )
 
-    def build(self) -> NativePlannerCarpAdapter:
+    def build(self, *, opening_adapter: Any) -> NativePlannerCarpAdapter:
         generation = LocalBackend(
             self.generation_url,
             self.model_provenance,
@@ -249,4 +275,5 @@ class AdapterFactory:
             root_seed=self.root_seed,
             request_namespace=self.request_namespace,
             method_provenance=self.method_provenance,
+            opening_adapter=opening_adapter,
         )

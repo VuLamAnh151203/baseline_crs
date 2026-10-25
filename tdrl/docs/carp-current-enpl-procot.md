@@ -11,7 +11,10 @@ baseline planner contract.  EnPL retains its verified train-only plan bank,
 domain/entity overlap retrieval (`k=3`), history-conditioned two-call planner,
 and native decoding.  ProCoT retains its native prompt, parser, one-call planner,
 and native decoding.  Neither method is retrained.  CARP owns the empty initial
-history, user simulator, acceptance moderator, maximum ten turns, minimum
+history and provides the same Direct-LLM opening to both methods; their native
+planners start after the first simulated user reply, as required by their
+user-conditioned source contracts.  CARP also owns the user simulator,
+acceptance moderator, maximum ten turns, minimum
 success turn (TopDial 1, DuRecDial2.0 2), and the separate 0--3 Ovr. pass.
 
 Dialogue generation uses the CARP batch-invariant Qwen3.5-9B BF16 server
