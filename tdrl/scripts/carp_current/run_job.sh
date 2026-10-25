@@ -8,6 +8,8 @@ count="${CARP_CURRENT_COUNT:?set CARP_CURRENT_COUNT}"
 workers="${CARP_CURRENT_WORKERS:-16}"
 generation_only="${CARP_CURRENT_GENERATION_ONLY:-0}"
 generation_device="${CARP_CURRENT_GENERATION_DEVICE:-0}"
+generation_port="${CARP_CURRENT_GENERATION_PORT:-8000}"
+embedding_port="${CARP_CURRENT_EMBEDDING_PORT:-8001}"
 python="${CARP_PYTHON:-/mnt/data/duclm3/crs_refactor/tdrl/runtime/.venv/bin/python}"
 model_root="${CARP_MODEL_ROOT:-/mnt/data/duclm3/crs_refactor/tdrl/models}"
 generation_path="${CARP_GEN_MODEL_PATH:-${model_root}/Qwen3.5-9B/c202236235762e1c871ad0ccb60c8ee5ba337b9a}"
@@ -23,8 +25,8 @@ export PATH="$cuda_home/bin:$(dirname "$python"):$PATH"
 export FLASHINFER_WORKSPACE_BASE="$run_root/kernel-cache"
 export CARP_GENERATION_MODEL="Qwen/Qwen3.5-9B"
 export CARP_EMBEDDING_MODEL="Qwen/Qwen3-Embedding-8B"
-export CARP_LLM_BASE_URL="http://127.0.0.1:8000/v1"
-export CARP_EMBEDDING_BASE_URL="http://127.0.0.1:8001/v1"
+export CARP_LLM_BASE_URL="http://127.0.0.1:${generation_port}/v1"
+export CARP_EMBEDDING_BASE_URL="http://127.0.0.1:${embedding_port}/v1"
 export PYTHONPATH="$project_root/src:$carp_root/src${PYTHONPATH:+:$PYTHONPATH}"
 
 git -C "$project_root/.." rev-parse HEAD > "$run_root/allocation/baseline-commit.txt"
@@ -78,22 +80,22 @@ start_bic_servers() {
     PYTHONPATH="$bic_site${PYTHONPATH:+:$PYTHONPATH}" \
     "$python" -m vllm.entrypoints.openai.api_server \
       --model "$generation_path" --served-model-name "$CARP_GENERATION_MODEL" \
-      --host 127.0.0.1 --port 8000 --dtype bfloat16 --tensor-parallel-size 1 \
+      --host 127.0.0.1 --port "$generation_port" --dtype bfloat16 --tensor-parallel-size 1 \
       --gpu-memory-utilization 0.85 --max-model-len 16384 --max-num-seqs 256 \
       --max-num-batched-tokens 32768 --no-enable-log-requests \
       --no-enable-prefix-caching --language-model-only \
       > "$run_root/logs/vllm-generation-bic.log" 2>&1 &
   gen_pid=$!
-  wait_ready 8000 "$gen_pid"
+  wait_ready "$generation_port" "$gen_pid"
   if [[ "$generation_only" == "0" ]]; then
     env CUDA_VISIBLE_DEVICES=1 "$python" -m vllm.entrypoints.openai.api_server \
         --model "$embedding_path" --served-model-name "$CARP_EMBEDDING_MODEL" \
-        --host 127.0.0.1 --port 8001 --dtype bfloat16 --tensor-parallel-size 1 \
+        --host 127.0.0.1 --port "$embedding_port" --dtype bfloat16 --tensor-parallel-size 1 \
         --gpu-memory-utilization 0.40 --max-model-len 8192 --max-num-seqs 64 \
         --no-enable-log-requests --no-enable-prefix-caching --runner pooling --convert embed \
         > "$run_root/logs/vllm-embedding.log" 2>&1 &
     emb_pid=$!
-    wait_ready 8001 "$emb_pid"
+    wait_ready "$embedding_port" "$emb_pid"
   else
     printf 'Embedding server omitted: EnPL/ProCoT issue zero embedding requests.\n' \
       > "$run_root/logs/vllm-embedding-not-required.log"
@@ -103,13 +105,13 @@ start_bic_servers() {
 start_stock_generation() {
   env CUDA_VISIBLE_DEVICES="$generation_device" "$python" -m vllm.entrypoints.openai.api_server \
       --model "$generation_path" --served-model-name "$CARP_GENERATION_MODEL" \
-      --host 127.0.0.1 --port 8000 --dtype bfloat16 --tensor-parallel-size 1 \
+      --host 127.0.0.1 --port "$generation_port" --dtype bfloat16 --tensor-parallel-size 1 \
       --gpu-memory-utilization 0.85 --max-model-len 16384 --max-num-seqs 256 \
       --max-num-batched-tokens 32768 --no-enable-log-requests \
       --no-enable-prefix-caching --language-model-only \
       > "$run_root/logs/vllm-generation-quality-stock.log" 2>&1 &
   gen_pid=$!
-  wait_ready 8000 "$gen_pid"
+  wait_ready "$generation_port" "$gen_pid"
 }
 
 evaluate_dataset() {
@@ -121,6 +123,7 @@ evaluate_dataset() {
     --root "$project_root" --carp-root "$carp_root" --enpl-artifact "$enpl_artifact" \
     --asset-manifest "$asset_manifest" --method "$method" --dataset "$dataset" \
     --output "$output" --count "$count" --workers "$workers" \
+    --generation-url "$CARP_LLM_BASE_URL" --embedding-url "$CARP_EMBEDDING_BASE_URL" \
     > "$run_root/logs/${method}-${dataset}.log" 2>&1
 }
 
