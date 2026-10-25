@@ -6,6 +6,8 @@ carp_root="${CARP_CURRENT_ROOT:-/home/u26anhvl/crs/carp_www}"
 run_root="${CARP_CURRENT_RUN_ROOT:?set CARP_CURRENT_RUN_ROOT}"
 count="${CARP_CURRENT_COUNT:?set CARP_CURRENT_COUNT}"
 workers="${CARP_CURRENT_WORKERS:-16}"
+generation_only="${CARP_CURRENT_GENERATION_ONLY:-0}"
+generation_device="${CARP_CURRENT_GENERATION_DEVICE:-0}"
 python="${CARP_PYTHON:-/mnt/data/duclm3/crs_refactor/tdrl/runtime/.venv/bin/python}"
 model_root="${CARP_MODEL_ROOT:-/mnt/data/duclm3/crs_refactor/tdrl/models}"
 generation_path="${CARP_GEN_MODEL_PATH:-${model_root}/Qwen3.5-9B/c202236235762e1c871ad0ccb60c8ee5ba337b9a}"
@@ -72,7 +74,7 @@ wait_ready() {
 }
 
 start_bic_servers() {
-  env CUDA_VISIBLE_DEVICES=0 VLLM_BATCH_INVARIANT=1 \
+  env CUDA_VISIBLE_DEVICES="$generation_device" VLLM_BATCH_INVARIANT=1 \
     PYTHONPATH="$bic_site${PYTHONPATH:+:$PYTHONPATH}" \
     "$python" -m vllm.entrypoints.openai.api_server \
       --model "$generation_path" --served-model-name "$CARP_GENERATION_MODEL" \
@@ -82,19 +84,24 @@ start_bic_servers() {
       --no-enable-prefix-caching --language-model-only \
       > "$run_root/logs/vllm-generation-bic.log" 2>&1 &
   gen_pid=$!
-  env CUDA_VISIBLE_DEVICES=1 "$python" -m vllm.entrypoints.openai.api_server \
-      --model "$embedding_path" --served-model-name "$CARP_EMBEDDING_MODEL" \
-      --host 127.0.0.1 --port 8001 --dtype bfloat16 --tensor-parallel-size 1 \
-      --gpu-memory-utilization 0.40 --max-model-len 8192 --max-num-seqs 64 \
-      --no-enable-log-requests --no-enable-prefix-caching --runner pooling --convert embed \
-      > "$run_root/logs/vllm-embedding.log" 2>&1 &
-  emb_pid=$!
   wait_ready 8000 "$gen_pid"
-  wait_ready 8001 "$emb_pid"
+  if [[ "$generation_only" == "0" ]]; then
+    env CUDA_VISIBLE_DEVICES=1 "$python" -m vllm.entrypoints.openai.api_server \
+        --model "$embedding_path" --served-model-name "$CARP_EMBEDDING_MODEL" \
+        --host 127.0.0.1 --port 8001 --dtype bfloat16 --tensor-parallel-size 1 \
+        --gpu-memory-utilization 0.40 --max-model-len 8192 --max-num-seqs 64 \
+        --no-enable-log-requests --no-enable-prefix-caching --runner pooling --convert embed \
+        > "$run_root/logs/vllm-embedding.log" 2>&1 &
+    emb_pid=$!
+    wait_ready 8001 "$emb_pid"
+  else
+    printf 'Embedding server omitted: EnPL/ProCoT issue zero embedding requests.\n' \
+      > "$run_root/logs/vllm-embedding-not-required.log"
+  fi
 }
 
 start_stock_generation() {
-  env CUDA_VISIBLE_DEVICES=0 "$python" -m vllm.entrypoints.openai.api_server \
+  env CUDA_VISIBLE_DEVICES="$generation_device" "$python" -m vllm.entrypoints.openai.api_server \
       --model "$generation_path" --served-model-name "$CARP_GENERATION_MODEL" \
       --host 127.0.0.1 --port 8000 --dtype bfloat16 --tensor-parallel-size 1 \
       --gpu-memory-utilization 0.85 --max-model-len 16384 --max-num-seqs 256 \
@@ -110,7 +117,7 @@ evaluate_dataset() {
   local dataset="$2"
   local output="$run_root/$method/$dataset"
   mkdir -p -- "$output"
-  env CUDA_VISIBLE_DEVICES=0 "$python" "$project_root/scripts/carp_current/run.py" evaluate \
+  env CUDA_VISIBLE_DEVICES="$generation_device" "$python" "$project_root/scripts/carp_current/run.py" evaluate \
     --root "$project_root" --carp-root "$carp_root" --enpl-artifact "$enpl_artifact" \
     --asset-manifest "$asset_manifest" --method "$method" --dataset "$dataset" \
     --output "$output" --count "$count" --workers "$workers" \

@@ -20,6 +20,11 @@ The published CARP quality protocol is preserved by restarting the same model
 on the stock vLLM server for Ovr. scoring.  Results are resumable by scenario;
 native assistant calls also use a provenance-bound request journal.
 
+For a one-GPU compatibility mini, `CARP_CURRENT_GENERATION_ONLY=1` omits the
+otherwise idle embedding server.  This is execution-only: both methods declare
+and record zero embedding requests, and all dialogue-generating requests still
+use the same batch-invariant generation server and evaluator.
+
 Submit the validated chain from `tdrl/`:
 
 ```bash
