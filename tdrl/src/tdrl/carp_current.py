@@ -134,6 +134,7 @@ class NativePlannerCarpAdapter:
                     "output_tokens": sum(item.output_tokens for item in requests),
                     "total_tokens": sum(item.total_tokens for item in requests),
                     "latency_s": sum(item.latency_s for item in requests),
+                    "token_counts_available": True,
                 },
             }
         )
@@ -141,6 +142,7 @@ class NativePlannerCarpAdapter:
 
     def get_assistant_meta(self) -> dict[str, Any]:
         generation = [trace["generation"] for trace in self._turn_traces]
+        native_generation = [row for row in generation if row["token_counts_available"]]
         return {
             "adapter": "native_planner_to_carp_current_v1",
             "method": self.name,
@@ -151,11 +153,17 @@ class NativePlannerCarpAdapter:
             "coverage_note": "EnPL/ProCoT do not expose CARP retrieval-defined OOD labels.",
             "method_provenance": self.method_provenance,
             "compute": {
-                "assistant_generation_requests": sum(row["requests"] for row in generation),
-                "assistant_input_tokens": sum(row["input_tokens"] for row in generation),
-                "assistant_output_tokens": sum(row["output_tokens"] for row in generation),
-                "assistant_total_tokens": sum(row["total_tokens"] for row in generation),
-                "assistant_generation_latency_s": sum(row["latency_s"] for row in generation),
+                "shared_carp_opening_requests": len(generation) - len(native_generation),
+                "native_method_generation_requests": sum(
+                    row["requests"] for row in native_generation
+                ),
+                "native_method_input_tokens": sum(row["input_tokens"] for row in native_generation),
+                "native_method_output_tokens": sum(row["output_tokens"] for row in native_generation),
+                "native_method_total_tokens": sum(row["total_tokens"] for row in native_generation),
+                "native_method_generation_latency_s": sum(
+                    row["latency_s"] for row in native_generation
+                ),
+                "shared_opening_token_counts_available": False,
             },
             "turn_traces": list(self._turn_traces),
         }

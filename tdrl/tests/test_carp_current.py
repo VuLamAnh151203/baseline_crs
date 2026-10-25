@@ -100,11 +100,13 @@ def test_adapter_preserves_native_planner_and_reports_per_dialogue_compute():
     meta = adapter.get_assistant_meta()
     assert meta["coverage_available"] is False
     assert meta["compute"] == {
-        "assistant_generation_requests": 1,
-        "assistant_input_tokens": 10,
-        "assistant_output_tokens": 2,
-        "assistant_total_tokens": 12,
-        "assistant_generation_latency_s": 0.25,
+        "shared_carp_opening_requests": 0,
+        "native_method_generation_requests": 1,
+        "native_method_input_tokens": 10,
+        "native_method_output_tokens": 2,
+        "native_method_total_tokens": 12,
+        "native_method_generation_latency_s": 0.25,
+        "shared_opening_token_counts_available": False,
     }
     assert adapter.generate_reply(FakeScenario(id="scenario-2"), []) == "opening for scenario-2"
     assert len(adapter.get_assistant_meta()["turn_traces"]) == 1
