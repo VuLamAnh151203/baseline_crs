@@ -19,6 +19,14 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
+def tree_digests(root: Path) -> dict[str, str]:
+    return {
+        str(path.relative_to(root)): digest(path)
+        for path in sorted(root.rglob("*"))
+        if path.is_file() and "__pycache__" not in path.parts and path.suffix != ".pyc"
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
@@ -73,9 +81,48 @@ def main() -> None:
     }
     for source_paths in method_sources.values():
         required.extend(source_paths)
+    method_mirrors = {
+        "direct_llm_v2": ("direct_llm", "direct_llm"),
+        "tepl_v2": ("epl", "epl"),
+        "enpl_domain3": ("enpl", "enpl"),
+        "procot": ("procot", "procot"),
+        "dpdp": ("dpdp", "dpdp"),
+        "scope_crs_lite": ("scope", "scope"),
+        "epl_native_qwen": ("epl_native", "epl_native"),
+        "difftod": ("difftod", "difftod"),
+        "trip": ("trip", "trip"),
+    }
+    required_directories: list[Path] = []
+    for public_name, (source_name, runner_name) in method_mirrors.items():
+        required_directories.extend(
+            (
+                root / "baselines" / public_name / "source",
+                root / "baselines" / public_name / "runner",
+                project / "src" / "tdrl" / "baselines" / source_name,
+                project / "scripts" / runner_name,
+            )
+        )
     missing = [str(path) for path in required if not path.is_file()]
+    missing.extend(str(path) for path in required_directories if not path.is_dir())
     if missing:
         raise SystemExit("missing required repository files:\n" + "\n".join(missing))
+
+    for public_name, (source_name, runner_name) in method_mirrors.items():
+        comparisons = (
+            (
+                project / "src" / "tdrl" / "baselines" / source_name,
+                root / "baselines" / public_name / "source",
+            ),
+            (
+                project / "scripts" / runner_name,
+                root / "baselines" / public_name / "runner",
+            ),
+        )
+        for canonical, mirror in comparisons:
+            if tree_digests(canonical) != tree_digests(mirror):
+                raise SystemExit(
+                    f"baseline mirror differs from canonical source: {mirror} != {canonical}"
+                )
 
     registry = json.loads((root / "configs" / "baseline_registry.json").read_text())
     if registry.get("schema_version") != 1 or not registry.get("methods"):
@@ -105,6 +152,7 @@ def main() -> None:
         "fixed_resource_sha256": digest(resource),
         "methods": sorted(registry["methods"]),
         "packaged_method_sources": sorted(method_sources),
+        "verified_source_mirrors": sorted(method_mirrors),
     }
     if args.require_assets:
         for relative in ("data/raw", "data/processed", "models"):

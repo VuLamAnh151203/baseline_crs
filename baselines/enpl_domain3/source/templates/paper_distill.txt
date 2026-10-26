@@ -1,0 +1,7 @@
+Here is an example:
+Conversation: {conversation}
+Distilled Plan: {plan}
+
+Your task is to distill the plan according to the target-driven conversation below. The AI's goal is to recommend the target movie to the user. The plan shows the process of the conversation AI recommending the target movie to the user. The conversation between recommendation AI and the user is target-driven, gradually shifting the topic to the target movie. And the plan should be as short as possible to reflect the focus of the conversation. Attention to entities mentioned in the reservations dialogue. Only return the plan. The following is the conversation you need to use in distilling plan:
+Conversation: {new_conversation}
+Plan:

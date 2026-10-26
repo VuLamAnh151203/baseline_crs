@@ -128,8 +128,10 @@ the protocol.
 
 ## Repository map
 
-- `tdrl/src/tdrl/baselines/`: isolated baseline implementations.
-- `tdrl/scripts/<method>/`: training/evaluation controllers.
+- `baselines/<method>/source/`: visible, byte-identical mirror of each adapted baseline implementation.
+- `baselines/<method>/runner/`: visible, byte-identical mirror of its method-specific controllers.
+- `tdrl/src/tdrl/baselines/`: canonical import location used by the runnable package.
+- `tdrl/scripts/<method>/`: canonical training/evaluation controllers used by the launchers.
 - `tdrl/configs/`: model, source and experiment locks.
 - `tdrl/src/tdrl/resources/`: explicit fixed test membership.
 - `baselines/<method>/README.md`: method-specific fidelity and run notes.
@@ -137,6 +139,10 @@ the protocol.
 - `scripts/slurm/baseline_e2e.sbatch`: shared allocation payload.
 - `docs/ASSETS.md`: non-Git assets and verification requirements.
 - `docs/UPSTREAM_SOURCES.md`: pinned upstream provenance.
+
+The copies under `baselines/` make each method's code directly visible on GitHub. Execute jobs
+through the root launchers, which use the canonical `tdrl/` package. `scripts/verify_checkout.py`
+rejects a checkout if a visible source/runner mirror differs from its canonical copy.
 
 ## Important limitations
 
