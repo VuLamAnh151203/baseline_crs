@@ -33,6 +33,46 @@ def main() -> None:
         project / "src" / "tdrl" / "resources" / "test_scenarios_1000_td500_dr500_v1.json",
         root / "configs" / "baseline_registry.json",
     ]
+    method_sources = {
+        "direct_llm_v2": (
+            project / "src" / "tdrl" / "baselines" / "direct_llm" / "planner.py",
+            project / "scripts" / "direct_llm" / "run_e2e.py",
+        ),
+        "tepl_v2": (
+            project / "src" / "tdrl" / "baselines" / "epl" / "planner.py",
+            project / "scripts" / "epl" / "run_e2e.py",
+        ),
+        "enpl_domain3": (
+            project / "src" / "tdrl" / "baselines" / "enpl" / "planner.py",
+            project / "scripts" / "enpl" / "run_e2e.py",
+        ),
+        "procot": (
+            project / "src" / "tdrl" / "baselines" / "procot" / "planner.py",
+            project / "scripts" / "procot" / "run_e2e.py",
+        ),
+        "dpdp": (
+            project / "src" / "tdrl" / "baselines" / "dpdp" / "planner.py",
+            project / "scripts" / "dpdp" / "run_training_pipeline.py",
+        ),
+        "scope_crs_lite": (
+            project / "src" / "tdrl" / "baselines" / "scope" / "planner.py",
+            project / "scripts" / "scope" / "run_e2e.py",
+        ),
+        "epl_native_qwen": (
+            project / "src" / "tdrl" / "baselines" / "epl_native" / "planner.py",
+            project / "scripts" / "epl_native" / "run_full_e2e.py",
+        ),
+        "difftod": (
+            project / "src" / "tdrl" / "baselines" / "difftod" / "planner.py",
+            project / "scripts" / "train_difftod.py",
+        ),
+        "trip": (
+            project / "src" / "tdrl" / "baselines" / "trip" / "planner.py",
+            project / "src" / "tdrl" / "baselines" / "trip" / "cli.py",
+        ),
+    }
+    for source_paths in method_sources.values():
+        required.extend(source_paths)
     missing = [str(path) for path in required if not path.is_file()]
     if missing:
         raise SystemExit("missing required repository files:\n" + "\n".join(missing))
@@ -40,6 +80,12 @@ def main() -> None:
     registry = json.loads((root / "configs" / "baseline_registry.json").read_text())
     if registry.get("schema_version") != 1 or not registry.get("methods"):
         raise SystemExit("invalid baseline registry")
+    missing_registered = sorted(set(registry["methods"]) - set(method_sources))
+    if missing_registered:
+        raise SystemExit(
+            "registered methods have no packaged source contract: "
+            + ", ".join(missing_registered)
+        )
     resource = project / "src" / "tdrl" / "resources" / "test_scenarios_1000_td500_dr500_v1.json"
     dirty = subprocess.run(
         ["git", "-C", str(root), "status", "--porcelain", "--untracked-files=all"],
@@ -58,6 +104,7 @@ def main() -> None:
         ).strip(),
         "fixed_resource_sha256": digest(resource),
         "methods": sorted(registry["methods"]),
+        "packaged_method_sources": sorted(method_sources),
     }
     if args.require_assets:
         for relative in ("data/raw", "data/processed", "models"):
