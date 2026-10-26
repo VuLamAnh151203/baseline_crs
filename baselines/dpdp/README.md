@@ -1,5 +1,8 @@
 # DPDP
 
+Untouched author code: [`upstream/`](upstream/) at commit
+`4d1e22e35db452d51f0f39388456d310ec1c971b`. The adapted runtime remains under `tdrl/`.
+
 DPDP preserves a fast learned actor-critic policy, confidence routing and slow open-loop PUCT
 MCTS. The full controller prepares train/dev data, annotates rewards with local Qwen, performs
 offline training, runs MCTS self-play, selects on development and evaluates the frozen checkpoint.

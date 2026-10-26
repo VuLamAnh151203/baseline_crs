@@ -1,5 +1,8 @@
 # SCOPE-CRS-lite
 
+Untouched SCOPE author code: [`upstream/`](upstream/) at commit
+`b35dbc64808afce25e8f8e5d6838ecf271ec4d0b`. CRS-lite adaptation remains under `tdrl/`.
+
 Task-adapted SCOPE that keeps the released four-seed transition ensemble and online semantic-space
 MCTS while replacing task-specific response generation with shared Qwen and fitting a
 dataset-specific goal reward from train/dev only. This is not SCOPE-native.

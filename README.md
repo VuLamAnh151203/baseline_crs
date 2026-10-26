@@ -35,7 +35,7 @@ submitted: use only complete reports with verified manifests.
 ## Clone and environment
 
 ```bash
-git clone https://github.com/VuLamAnh151203/baseline_crs.git
+git clone --recurse-submodules https://github.com/VuLamAnh151203/baseline_crs.git
 cd baseline_crs
 
 source "$HOME/miniconda3/etc/profile.d/conda.sh"
@@ -65,14 +65,17 @@ Populate `tdrl/data/raw` and `tdrl/data/processed` according to
 `tdrl/scripts/bootstrap_models.py` or copy already hash-verified snapshots into `tdrl/models`.
 Method-specific assets are documented in [`docs/ASSETS.md`](docs/ASSETS.md).
 
-For source-level audits, fetch every author repository at its exact pinned commit into the ignored
-`external/` directory:
+The untouched author repositories are pinned as submodules under
+`baselines/<method>/upstream/`. If an existing checkout was cloned without submodules, initialize
+them with:
 
 ```bash
-bash scripts/fetch_upstream_sources.sh "$PWD/external"
+git submodule update --init --recursive
 ```
 
-The runtime adapters do not import these checkouts; they are provenance/reference material.
+The runtime adapters do not modify or import these upstream checkouts; they are immutable
+provenance/reference material. Adapted implementations and execution glue live separately under
+`tdrl/`. `scripts/fetch_upstream_sources.sh` remains available for a separate audit checkout.
 
 Copy `.env.example` to `.env`, replace all paths, and source it:
 
@@ -128,8 +131,7 @@ the protocol.
 
 ## Repository map
 
-- `baselines/<method>/source/`: visible, byte-identical mirror of each adapted baseline implementation.
-- `baselines/<method>/runner/`: visible, byte-identical mirror of its method-specific controllers.
+- `baselines/<method>/upstream/`: untouched author code pinned as a Git submodule.
 - `tdrl/src/tdrl/baselines/`: canonical import location used by the runnable package.
 - `tdrl/scripts/<method>/`: canonical training/evaluation controllers used by the launchers.
 - `tdrl/configs/`: model, source and experiment locks.
@@ -140,9 +142,10 @@ the protocol.
 - `docs/ASSETS.md`: non-Git assets and verification requirements.
 - `docs/UPSTREAM_SOURCES.md`: pinned upstream provenance.
 
-The copies under `baselines/` make each method's code directly visible on GitHub. Execute jobs
-through the root launchers, which use the canonical `tdrl/` package. `scripts/verify_checkout.py`
-rejects a checkout if a visible source/runner mirror differs from its canonical copy.
+DirectLLM-v2 is a repository-defined control and therefore has no external upstream submodule.
+Execute experiments through the root launchers, which use the adapted `tdrl/` package.
+`scripts/verify_checkout.py` verifies the pinned upstream gitlinks independently from the adapted
+runtime source.
 
 ## Important limitations
 

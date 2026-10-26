@@ -19,18 +19,11 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
-def tree_digests(root: Path) -> dict[str, str]:
-    return {
-        str(path.relative_to(root)): digest(path)
-        for path in sorted(root.rglob("*"))
-        if path.is_file() and "__pycache__" not in path.parts and path.suffix != ".pyc"
-    }
-
-
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--require-assets", action="store_true")
+    parser.add_argument("--require-upstreams", action="store_true")
     args = parser.parse_args()
     root = args.root.resolve()
     project = root / "tdrl"
@@ -40,6 +33,7 @@ def main() -> None:
         project / "configs" / "models.lock.json",
         project / "src" / "tdrl" / "resources" / "test_scenarios_1000_td500_dr500_v1.json",
         root / "configs" / "baseline_registry.json",
+        root / ".gitmodules",
     ]
     method_sources = {
         "direct_llm_v2": (
@@ -81,47 +75,40 @@ def main() -> None:
     }
     for source_paths in method_sources.values():
         required.extend(source_paths)
-    method_mirrors = {
-        "direct_llm_v2": ("direct_llm", "direct_llm"),
-        "tepl_v2": ("epl", "epl"),
-        "enpl_domain3": ("enpl", "enpl"),
-        "procot": ("procot", "procot"),
-        "dpdp": ("dpdp", "dpdp"),
-        "scope_crs_lite": ("scope", "scope"),
-        "epl_native_qwen": ("epl_native", "epl_native"),
-        "difftod": ("difftod", "difftod"),
-        "trip": ("trip", "trip"),
-    }
-    required_directories: list[Path] = []
-    for public_name, (source_name, runner_name) in method_mirrors.items():
-        required_directories.extend(
-            (
-                root / "baselines" / public_name / "source",
-                root / "baselines" / public_name / "runner",
-                project / "src" / "tdrl" / "baselines" / source_name,
-                project / "scripts" / runner_name,
-            )
-        )
     missing = [str(path) for path in required if not path.is_file()]
-    missing.extend(str(path) for path in required_directories if not path.is_dir())
     if missing:
         raise SystemExit("missing required repository files:\n" + "\n".join(missing))
 
-    for public_name, (source_name, runner_name) in method_mirrors.items():
-        comparisons = (
-            (
-                project / "src" / "tdrl" / "baselines" / source_name,
-                root / "baselines" / public_name / "source",
-            ),
-            (
-                project / "scripts" / runner_name,
-                root / "baselines" / public_name / "runner",
-            ),
-        )
-        for canonical, mirror in comparisons:
-            if tree_digests(canonical) != tree_digests(mirror):
+    upstreams = {
+        "baselines/dpdp/upstream": "4d1e22e35db452d51f0f39388456d310ec1c971b",
+        "baselines/tepl_v2/upstream": "364c6fd17f1bbdb2abcac9cd2381a29bf1bd5dda",
+        "baselines/epl_native_qwen/upstream": "364c6fd17f1bbdb2abcac9cd2381a29bf1bd5dda",
+        "baselines/enpl_domain3/upstream": "a76d5a7d6ea1d9c7a07a9574f4901ff79ed440bd",
+        "baselines/procot/upstream": "77ff4ed7dfda11afd719db3bd40886a1a51edf4e",
+        "baselines/scope_crs_lite/upstream": "b35dbc64808afce25e8f8e5d6838ecf271ec4d0b",
+        "baselines/difftod/upstream": "fd46b2887a9c0d9e0e413623e79c72ee32b9b7c1",
+        "baselines/trip/upstream": "ee845a5306902ae673e92083711b283b9f33bb9f",
+    }
+    for path, expected_revision in upstreams.items():
+        entry = subprocess.check_output(
+            ["git", "-C", str(root), "ls-tree", "HEAD", "--", path], text=True
+        ).strip()
+        fields = entry.split(None, 3)
+        if len(fields) != 4 or fields[:3] != ["160000", "commit", expected_revision]:
+            raise SystemExit(
+                f"invalid upstream gitlink for {path}: expected {expected_revision}, got {entry}"
+            )
+        if args.require_upstreams:
+            checkout = root / path
+            if not checkout.is_dir():
+                raise SystemExit(f"upstream submodule is not initialized: {checkout}")
+            actual_revision = subprocess.check_output(
+                ["git", "-C", str(checkout), "rev-parse", "HEAD"], text=True
+            ).strip()
+            if actual_revision != expected_revision:
                 raise SystemExit(
-                    f"baseline mirror differs from canonical source: {mirror} != {canonical}"
+                    f"upstream checkout revision mismatch for {path}: "
+                    f"{actual_revision} != {expected_revision}"
                 )
 
     registry = json.loads((root / "configs" / "baseline_registry.json").read_text())
@@ -152,7 +139,7 @@ def main() -> None:
         "fixed_resource_sha256": digest(resource),
         "methods": sorted(registry["methods"]),
         "packaged_method_sources": sorted(method_sources),
-        "verified_source_mirrors": sorted(method_mirrors),
+        "pinned_upstream_gitlinks": upstreams,
     }
     if args.require_assets:
         for relative in ("data/raw", "data/processed", "models"):

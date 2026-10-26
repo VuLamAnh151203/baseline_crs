@@ -1,5 +1,0 @@
-Your task is to generate the next-turn response according to the Plan and Context above. The Context is a part of movie recommendation conversation between a user and an AI recommender. The AI's goal is to recommend the target movie to the user. Generate a conversation with as many topic changes as possible to generate more rounds of dialogue. Switch the topic to the target during the chat with the user. Make the conversation more like a real-life chat and be specific. In the example above, where User/AI represents whether the speaker is a User or an AI.
-Target: {target}
-Context: {context}
-Plan: {plan}
-Next-turn response:

@@ -1,0 +1,24 @@
+[submodule "baselines/dpdp/upstream"]
+	path = baselines/dpdp/upstream
+	url = https://github.com/cs-holder/DPDP.git
+[submodule "baselines/tepl_v2/upstream"]
+	path = baselines/tepl_v2/upstream
+	url = https://github.com/huyquangdao/EPL.git
+[submodule "baselines/epl_native_qwen/upstream"]
+	path = baselines/epl_native_qwen/upstream
+	url = https://github.com/huyquangdao/EPL.git
+[submodule "baselines/enpl_domain3/upstream"]
+	path = baselines/enpl_domain3/upstream
+	url = https://github.com/pandazzh2020/ConvPlan.git
+[submodule "baselines/procot/upstream"]
+	path = baselines/procot/upstream
+	url = https://github.com/dengyang17/LLM-Proactive.git
+[submodule "baselines/scope_crs_lite/upstream"]
+	path = baselines/scope_crs_lite/upstream
+	url = https://github.com/chenzhiliang94/convo-plan-SCOPE.git
+[submodule "baselines/difftod/upstream"]
+	path = baselines/difftod/upstream
+	url = https://github.com/ninglab/DiffTOD.git
+[submodule "baselines/trip/upstream"]
+	path = baselines/trip/upstream
+	url = https://github.com/iwangjian/TRIP.git

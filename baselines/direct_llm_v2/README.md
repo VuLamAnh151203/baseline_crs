@@ -1,5 +1,8 @@
 # DirectLLM-v2
 
+This is a repository-defined control, so there is no external author repository. Its adapted
+implementation remains under `tdrl/src/tdrl/baselines/direct_llm/`.
+
 Inference-only lower-bound/control: the shared Qwen generator responds directly from the same
 observable profile, knowledge, target and dialogue history available to the planning baselines.
 It uses the shared assistant prompt rather than a bespoke stronger baseline prompt. There is no

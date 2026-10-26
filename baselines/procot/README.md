@@ -1,5 +1,8 @@
 # ProCoT
 
+Untouched author code: [`upstream/`](upstream/) at commit
+`77ff4ed7dfda11afd719db3bd40886a1a51edf4e`. Qwen/evaluation adaptation remains under `tdrl/`.
+
 One-shot target-guided ProCoT using the shared local Qwen backbone. It preserves a single
 thought-action-response planning call, current-topic to next-topic bridge planning and the pinned
 upstream demonstration. It has no training stage under this evaluation.
